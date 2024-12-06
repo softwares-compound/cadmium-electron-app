@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 210 40% 98%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 210 40% 98%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 96.1%;
+    --secondary: 212.7 26.8% 83.9%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 212.7 26.8% 83.9%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 212.7 26.8% 83.9%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 96.1%;
+    --border: 215 20.2% 65.1%;
+    --input: 215 20.2% 65.1%;
+    --ring: 222.2 84% 4.9%;
+    --chart-1: 222.2 84% 4.9%;
+    --chart-2: 222.2 47.4% 11.2%;
+    --chart-3: 217.2 32.6% 17.5%;
+    --chart-4: 215.3 25% 26.7%;
+    --chart-5: 215.3 19.3% 34.5%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 222.2 47.4% 11.2%;
+    --foreground: 210 40% 96.1%;
+    --card: 222.2 47.4% 11.2%;
+    --card-foreground: 210 40% 96.1%;
+    --popover: 222.2 47.4% 11.2%;
+    --popover-foreground: 210 40% 96.1%;
+    --primary: 210 40% 96.1%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 215.3 19.3% 34.5%;
+    --secondary-foreground: 210 40% 96.1%;
+    --muted: 215.3 19.3% 34.5%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 215.3 19.3% 34.5%;
+    --accent-foreground: 210 40% 96.1%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 96.1%;
+    --border: 215.3 19.3% 34.5%;
+    --input: 215.3 19.3% 34.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 222.2 84% 4.9%;
+    --chart-2: 217.2 32.6% 17.5%;
+    --chart-3: 215.3 25% 26.7%;
+    --chart-4: 215.3 19.3% 34.5%;
+    --chart-5: 215.4 16.3% 46.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    @apply leading-normal;
+  }
+}
+
+.debug {
+  border: 1px solid red;
+}
