@@ -41,7 +41,7 @@ const ServerTest: React.FC = () => {
             {error && <p style={styles.error}>Error: {error}</p>}
             {data && <p>Response from Server: {data.message}</p>}
             {/* Optional: Add a button to re-fetch data */}
-            <button onClick={fetchData} style={styles.button}>
+            <button onClick={fetchData} style={styles.button} >
                 Refresh
             </button>
             <ThemeToggle />
@@ -66,6 +66,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         padding: '8px 16px',
         fontSize: '16px',
         cursor: 'pointer',
+        borderRadius: '4px',
     },
 };
 
