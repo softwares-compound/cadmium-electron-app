@@ -135,7 +135,6 @@ dist/
 build/
 
 # TypeScript build output
-lib/
 tsconfig.tsbuildinfo
 
 # Node.js debug files

@@ -1,35 +1,86 @@
-// react-app/src/App.tsx
-import { useEffect, useState } from 'react';
-import './App.css';
-import { ToMainPayload, FromMainPayload } from '../../src/types/types';
-import ServerTest from './pages/server-test';
+import { Suspense, lazy } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+
+// Lazy load pages
+// const Home = lazy(() => import('./pages/Home'));
+const Dashboard = lazy(() => import('./pages/dashboard/dashboard'));
+const Projects = lazy(() => import('./pages/projects/projects'));
+const Settings = lazy(() => import('./pages/settings/setting'));
+const ProtectedRoute = lazy(() => import('./services/protected-route'));
+const NotFound = lazy(() => import('./pages/not-found/not-found'));
+const Login = lazy(() => import('./pages/login/login'));
+
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <>
+        {/* <Header /> */}
+        <Suspense fallback={<div>Loading...</div>}>
+          <Login />
+        </Suspense>
+        {/* <Footer /> */}
+      </>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <>
+        {/* <Header /> */}
+        <Suspense fallback={<div>Loading...</div>}>
+          <Login />
+        </Suspense>
+        {/* <Footer /> */}
+      </>
+    ),
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <ProtectedRoute>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Dashboard />
+        </Suspense>
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "Projects",
+        element: (
+          <Suspense fallback={<div>Loading Projects...</div>}>
+            <Projects />
+          </Suspense>
+        ),
+      },
+      {
+        path: "settings",
+        element: (
+          <Suspense fallback={<div>Loading Settings...</div>}>
+            <Settings />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: (
+      <>
+        {/* <Header /> */}
+        <Suspense fallback={<div>Loading...</div>}>
+          <NotFound />
+        </Suspense>
+        {/* <Footer /> */}
+      </>
+    ),
+  },
+]);
 
 function App() {
-  const [response, setResponse] = useState<string>('');
-
-  // Function to send a message to the main process
-  const sendMessageToMain = () => {
-    const payload: ToMainPayload = { message: 'Hello from React!' };
-    window.electronAPI.sendMessage('toMain', payload);
-  };
-
-  // Set up a listener for messages from the main process
-  useEffect(() => {
-    window.electronAPI.receiveMessage('fromMain', (data: FromMainPayload) => {
-      setResponse(data.response);
-    });
-  }, []);
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Electron IPC Example</h1>
-        <button onClick={sendMessageToMain}>Send Message to Main</button>
-        {response && <p>Response from Main: {response}</p>}
-        <ServerTest />
-      </header>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
-
 export default App;
