@@ -1,6 +1,6 @@
 // cadmium-frontend/src/components/ServerTest.tsx
 
-import { ThemeToggle } from '@/components/custom/theme/theme-togggle';
+import { ThemeToggle } from '@/components/custom/theme/theme-toggle';
 import React, { useEffect, useState } from 'react';
 
 interface ApiResponse {
