@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Login from './pages/login';
+import LoginNavbar from './components/custom/navbars/login-navbar';
 
 
 // Lazy load pages
@@ -9,7 +9,7 @@ const Projects = lazy(() => import('./pages/projects/projects'));
 const Settings = lazy(() => import('./pages/settings/setting'));
 const ProtectedRoute = lazy(() => import('./services/protected-route'));
 const NotFound = lazy(() => import('./pages/not-found/not-found'));
-// const Login = lazy(() => import('./pages/login/index'));
+const Login = lazy(() => import('./pages/login/index'));
 
 
 
@@ -18,11 +18,10 @@ const router = createBrowserRouter([
 		path: "/",
 		element: (
 			<>
-				{/* <Header /> */}
-				{/* <Suspense fallback={<div>Loading...</div>}> */}
-				<Login />
-				{/* </Suspense> */}
-				{/* <Footer /> */}
+				<LoginNavbar />
+				<Suspense fallback={<div>Loading...</div>}>
+					<Login />
+				</Suspense>
 			</>
 		),
 	},

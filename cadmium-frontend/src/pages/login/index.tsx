@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Login: React.FC = () => {
     return (
 
-        <div className="flex flex-col h-screen w-full items-center justify-center px-4 debug">
+        <div className="flex flex-col h-screen w-full items-center justify-center px-4">
             <LoginForm />
             <div className="my-4 flex items-center justify-between gap-2 w-full max-w-sm">
                 <div className="bg-muted h-[1px] w-full"></div>
