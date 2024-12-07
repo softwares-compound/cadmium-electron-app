@@ -9,6 +9,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
 button:hover {
   border: inherit;
 }
@@ -49,6 +50,7 @@ button:hover {
     --sidebar-border: 215 20.2% 65.1%;
     --sidebar-ring: 215.4 16.3% 46.9%;
   }
+
   .dark {
     --background: 222.2 47.4% 11.2%;
     --foreground: 210 40% 96.1%;
@@ -89,6 +91,7 @@ button:hover {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     @apply leading-normal;
