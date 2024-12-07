@@ -35,4 +35,7 @@ module.exports = {
         __dirname: false,
         __filename: false,
     },
+    externals: {
+        'better-sqlite3': 'commonjs better-sqlite3',
+    },
 };

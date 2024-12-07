@@ -98,7 +98,7 @@ electron_react_app/
    Add environment-specific variables in the `.env` file, such as API URLs, ports, or secret keys:
    ```
    CORS_ORIGIN=http://localhost:5173
-   PORT=3001
+   PORT=6969
    ```
 
 ## Explanation of `scripts` in `package.json`

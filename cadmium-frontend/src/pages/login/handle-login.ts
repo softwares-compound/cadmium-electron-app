@@ -40,7 +40,7 @@ export const handleLogin = async (): Promise<void> => {
 
     setLoading(true); // Start loading
     try {
-        const resp = await LOCAL_AXIOS_INSTANCE.post("/api/signin", { clientId, clientSecret });
+        const resp = await LOCAL_AXIOS_INSTANCE.post("/login", { clientId, clientSecret });
         if (resp.status === 200) {
             // Store credentials
             localStorage.setItem("clientId", clientId);

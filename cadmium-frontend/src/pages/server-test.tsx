@@ -16,7 +16,7 @@ const ServerTest: React.FC = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch('http://localhost:3001/api');
+            const response = await fetch('http://localhost:6969/api');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

@@ -154,6 +154,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# SQlite
+*.db
 # PM2 logs
 pm2.log
 pm2.pid
