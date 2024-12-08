@@ -5,12 +5,14 @@ import { SidebarInset, SidebarProvider } from './components/ui/sidebar';
 import { AppSidebar } from './components/custom/sidebar';
 import PublicRouteProtector from './services/public-route-protector';
 import PrivateRouteProtector from './services/private-route-protector';
+import ProjectPageNavbar from './components/custom/navbars/projects-page-navbar';
 
 
 // Lazy load pages
-const Projects = lazy(() => import('./pages/projects'));
+const LogAnalysis = lazy(() => import('./pages/dashboard/log-analysis/index'));
 const NotFound = lazy(() => import('./pages/not-found/not-found'));
 const Login = lazy(() => import('./pages/login/index'));
+const Projects = lazy(() => import('./pages/projects/index'));
 
 
 const router = createBrowserRouter([
@@ -49,32 +51,26 @@ const router = createBrowserRouter([
 		element: (
 			<Suspense fallback={<div>Loading...</div>}>
 				<PrivateRouteProtector>
+					<ProjectPageNavbar />
+					<Projects />
+				</PrivateRouteProtector>
+			</Suspense>
+		),
+	},
+	{
+		path: "/:organization/projects/:project_id/log-analysis",
+		element: (
+			<Suspense fallback={<div>Loading...</div>}>
+				<PrivateRouteProtector>
 					<SidebarProvider >
 						<AppSidebar variant='inset' />
 						<SidebarInset >
-							<Projects />
+							<LogAnalysis />
 						</SidebarInset>
 					</SidebarProvider>
 				</PrivateRouteProtector>
 			</Suspense>
 		),
-		children: [
-			{
-				path: "/:project_id",
-				element: (
-					<Suspense fallback={<div>Loading...</div>}>
-						<PrivateRouteProtector>
-							<SidebarProvider >
-								<AppSidebar variant='inset' />
-								<SidebarInset >
-									<Projects />
-								</SidebarInset>
-							</SidebarProvider>
-						</PrivateRouteProtector>
-					</Suspense>
-				),
-			}
-		]
 	},
 	{
 		path: "*",

@@ -21,8 +21,7 @@ const PrivateRouteProtector: React.FC<Props> = ({ children }) => {
                 setOrganization("Rosterly")
             }
         } catch (error: Error | any) {
-            localStorage.removeItem("cd_id");
-            localStorage.removeItem("cd_secret");
+            localStorage.clear();
             setIsLoggedIn(false);
             setOrganization("");
             navigate("/login", { state: { from: location }, replace: true });
@@ -33,13 +32,13 @@ const PrivateRouteProtector: React.FC<Props> = ({ children }) => {
         }
     }
     useEffect(() => {
-        console.log("PrivateRouteProtector");
         const cd_id = localStorage.getItem("cd_id");
         const cd_secret = localStorage.getItem("cd_secret");
         if (cd_id && cd_secret) {
             void validate(cd_id, cd_secret)
         } else {
             navigate("/login", { state: { from: location }, replace: true });
+            localStorage.clear();
         }
     }, []);
 
