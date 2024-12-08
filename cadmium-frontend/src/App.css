@@ -37,13 +37,13 @@ button:hover {
     --chart-4: 215.3 25% 26.7%;
     --chart-5: 215.3 19.3% 34.5%;
     --radius: 0.5rem;
-    --sidebar-background: 215.3 25% 26.7%;
-    --sidebar-foreground: 212.7 26.8% 83.9%;
-    --sidebar-primary: 212.7 26.8% 83.9%;
-    --sidebar-primary-foreground: 215.4 16.3% 46.9%;
-    --sidebar-accent: 212.7 26.8% 83.9%;
-    --sidebar-accent-foreground: 215.4 16.3% 46.9%;
-    --sidebar-border: 215 20.2% 65.1%;
+    --sidebar-background: 240 4.8% 95.9%;
+    --sidebar-foreground: 222.2 84% 4.9%;
+    --sidebar-primary: 214.3 31.8% 91.4%;
+    --sidebar-primary-foreground: 217.2 32.6% 17.5%;
+    --sidebar-accent: 210 40% 96.1%;
+    --sidebar-accent-foreground: 215.3 19.3% 34.5%;
+    --sidebar-border: 215.3 19.3% 34.5%;
     --sidebar-ring: 215.4 16.3% 46.9%;
   }
 
@@ -72,13 +72,13 @@ button:hover {
     --chart-3: 215.3 25% 26.7%;
     --chart-4: 215.3 19.3% 34.5%;
     --chart-5: 215.4 16.3% 46.9%;
-    --sidebar-background: 215.3 25% 26.7%;
-    --sidebar-foreground: 212.7 26.8% 83.9%;
-    --sidebar-primary: 212.7 26.8% 83.9%;
-    --sidebar-primary-foreground: 215.4 16.3% 46.9%;
-    --sidebar-accent: 212.7 26.8% 83.9%;
-    --sidebar-accent-foreground: 215.4 16.3% 46.9%;
-    --sidebar-border: 215 20.2% 65.1%;
+    --sidebar-background: 223, 58%, 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 217.2 32.6% 17.5%;
+    --sidebar-primary-foreground: 214.3 31.8% 91.4%;
+    --sidebar-accent: 215.3 19.3% 34.5%;
+    --sidebar-accent-foreground: 210 40% 96.1%;
+    --sidebar-border: 215.3 19.3% 34.5%;
     --sidebar-ring: 215.4 16.3% 46.9%;
   }
 }

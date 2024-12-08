@@ -40,7 +40,7 @@ const PublicRouteProtector: React.FC<Props> = ({ children }) => {
 
     // If the user is logged in, redirect to the dashboard
     if (isLoggedIn) {
-        return <Navigate to="/dashboard" state={{ from: location }} replace />;
+        return <Navigate to="/rosterly/projects" state={{ from: location }} replace />;
     }
 
     if (loading) {
