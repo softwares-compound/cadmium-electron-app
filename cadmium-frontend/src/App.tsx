@@ -1,13 +1,14 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginNavbar from './components/custom/navbars/login-navbar';
+import PublicRouteProtector from './services/public-route';
 
 
 // Lazy load pages
 const Dashboard = lazy(() => import('./pages/dashboard/dashboard'));
 const Projects = lazy(() => import('./pages/projects/projects'));
 const Settings = lazy(() => import('./pages/settings/setting'));
-const ProtectedRoute = lazy(() => import('./services/protected-route'));
+const ProtectedRoute = lazy(() => import('./services/protected-route-protector'));
 const NotFound = lazy(() => import('./pages/not-found/not-found'));
 const Login = lazy(() => import('./pages/login/index'));
 
@@ -20,7 +21,9 @@ const router = createBrowserRouter([
 			<>
 				<LoginNavbar />
 				<Suspense fallback={<div>Loading...</div>}>
-					<Login />
+					<PublicRouteProtector>
+						<Login />
+					</PublicRouteProtector>
 				</Suspense>
 			</>
 		),

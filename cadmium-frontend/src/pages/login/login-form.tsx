@@ -11,34 +11,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import CustomLink from "@/components/ui/link";
 import { useLoginStore } from "@/stores/useLoginStore";
-import { validateForm } from "./validate-form";
+import { handleLogin } from "./handle-login";
 
 export function LoginForm() {
-    const {
-        formData,
-        errors,
-        loading,
-        setFormData,
-        setErrors,
-        setLoading,
-        clearErrors,
-    } = useLoginStore();
+    const { formData, errors, loading, setFormData, clearErrors } = useLoginStore();
 
-    const handleSubmit = (e: React.FormEvent): void => {
+    const handleSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
-        const validationErrors = validateForm(formData);
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
-
-        // Proceed with form submission
-        setLoading(true);
-        // Mock async request
-        setTimeout(() => {
-            setLoading(false);
-            alert("Logged in successfully!");
-        }, 2000);
+        await handleLogin(); // Call the extracted login handler
     };
 
     return (
