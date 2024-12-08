@@ -1,8 +1,7 @@
 // src/pages/login/index.tsx
 import React from "react";
 import { LoginForm } from "./login-form";
-import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
-import CustomLink from "@/components/ui/link";
+import ChooseOrg from "./choose-org";
 
 const Login: React.FC = () => {
     return (
@@ -13,19 +12,7 @@ const Login: React.FC = () => {
                 <span>or</span>
                 <div className="bg-muted h-[1px] w-full"></div>
             </div>
-
-            <Card className="mx-auto max-w-sm w-full">
-                <CardHeader>
-                    <CardDescription>
-                        Choose saved organization.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div>
-                        <CustomLink to={`/rosterly/projects`} className="text-xl no-underline">Rosterly</CustomLink>
-                    </div>
-                </CardContent>
-            </Card>
+            <ChooseOrg />
         </div>
     );
 };

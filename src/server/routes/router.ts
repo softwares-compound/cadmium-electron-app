@@ -1,6 +1,7 @@
 // src/routes/routes.ts
 import { Router } from 'express';
 import handleLogin from '../controllers/handle-login';
+import handleGetOrgList from '../controllers/handle-get-org-list';
 
 const router = Router();
 // TEST API
@@ -9,7 +10,7 @@ router.post('/echo-request', (req, res) => {
 });
 
 router.post('/login', handleLogin);
+router.get('/org-list', handleGetOrgList);
 
-// Add more routes as needed
 
 export default router;
