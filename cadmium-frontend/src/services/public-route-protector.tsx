@@ -9,7 +9,7 @@ type Props = {
 
 const PublicRouteProtector: React.FC<Props> = ({ children }) => {
     const { isLoggedIn, setIsLoggedIn } = useAuthStore(); // Zustand state for auth
-    const [loading, setLoading] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
     const location = useLocation();
 
     const validate = async (cd_id: string, cd_secret: string) => {
@@ -32,7 +32,6 @@ const PublicRouteProtector: React.FC<Props> = ({ children }) => {
         if (!isLoggedIn) {
             const cd_id = localStorage.getItem("cd_id");
             const cd_secret = localStorage.getItem("cd_secret");
-
             if (cd_id && cd_secret) {
                 void validate(cd_id, cd_secret)
             }
@@ -45,7 +44,7 @@ const PublicRouteProtector: React.FC<Props> = ({ children }) => {
     }
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className=""><p className="text-center">Loading...</p></div>;
     }
     // Otherwise, render the children (e.g., LoginPage)
     return children;
