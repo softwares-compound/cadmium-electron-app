@@ -37,6 +37,39 @@ export interface Organization {
 
 
 
+// ****************************************************************************** //
+//! ***************************** PROJECTS TYPES *********************************** //
+// ****************************************************************************** //
+
+export type ProjectCardData = {
+    name: string
+    value: number | string
+    variant?: "default" | "destructive" | "outline" | "secondary" | null | undefined
+}
+export type Path = string
+export type ProjectCardProps = {
+    id: string
+    src: Path
+    alt: string
+    title: string
+    description: string
+    data: ProjectCardData[]
+    onOpen: () => void
+}
+
+export interface TerminalDrawerStoreState {
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    openDrawer: boolean;
+    setOpenDrawer: (openDrawer: boolean) => void;
+}
+
+
+
+
+
+
+
 
 
 
@@ -46,25 +79,5 @@ export interface Organization {
 
 
 // ****************************************************************************** //
-//! ***************************** LOGIN TYPES *********************************** //
-// ****************************************************************************** //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ****************************************************************************** //
-//! ***************************** LOGIN TYPES *********************************** //
+//! ***************************** LOGS TYPES *********************************** //
 // ****************************************************************************** //

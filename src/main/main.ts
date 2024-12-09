@@ -10,8 +10,8 @@ let expressServer: any; // Adjust type as needed
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        minWidth: 800,
-        minHeight: 600,
+        minWidth: 1080,
+        minHeight: 720,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,

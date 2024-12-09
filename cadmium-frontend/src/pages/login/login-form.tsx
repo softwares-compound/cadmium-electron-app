@@ -12,13 +12,14 @@ import { Label } from "@/components/ui/label";
 import CustomLink from "@/components/ui/link";
 import { useLoginStore } from "@/stores/useLoginStore";
 import { handleLogin } from "./handle-login";
+import { useNavigate } from "react-router-dom";
 
 export function LoginForm() {
     const { formData, errors, loading, setFormData, clearErrors } = useLoginStore();
-
+    const navigate = useNavigate();
     const handleSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
-        await handleLogin(); // Call the extracted login handler
+        await handleLogin(navigate); // Call the extracted login handler
     };
 
     return (

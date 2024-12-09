@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import './App.css';
@@ -11,13 +10,11 @@ import RefreshButton from './components/custom/global/refresh.tsx';
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-			<QueryClientProvider client={queryClient}>
-				<App />
-				<RefreshButton />
-			</QueryClientProvider>
-			<Toaster />
-		</ThemeProvider>
-	</StrictMode>,
+	<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+		<QueryClientProvider client={queryClient}>
+			<App />
+			<RefreshButton />
+		</QueryClientProvider>
+		<Toaster />
+	</ThemeProvider>
 )

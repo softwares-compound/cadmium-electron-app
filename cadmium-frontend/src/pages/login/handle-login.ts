@@ -2,32 +2,10 @@ import { toast } from "@/hooks/use-toast";
 import { LOCAL_AXIOS_INSTANCE } from "@/axios/axios";
 import { useLoginStore } from "@/stores/useLoginStore";
 import { validateForm } from "./validate-form";
+import { useAuthStore } from "@/stores/useAuthStore";
 
-/**
- * Handles the login process by validating the form data, making an API request, 
- * and managing the application state during the login flow.
- *
- * This function performs the following steps:
- * 1. Validates the form data using `validateForm` to ensure required fields are provided.
- * 2. Updates the error state if validation fails.
- * 3. Initiates an API request to the `/api/signin` endpoint with the provided client ID and client secret.
- * 4. On a successful response:
- *    - Stores the client ID and client secret in `localStorage` for persistent authentication.
- *    - Redirects the user to the "/rosterly/projects" route (or another route as needed).
- * 5. Handles various error scenarios:
- *    - 401: Displays an "Unauthorized" toast message for invalid credentials.
- *    - 400: Displays a "Client error" toast for existing credentials with additional guidance.
- *    - Other errors: Displays a generic error message with the received error details.
- * 6. Manages the loading state throughout the process to provide feedback in the UI.
- *
- * @async
- * @function handleLogin
- * @returns {Promise<void>} Resolves when the login process is complete.
- * @throws {Error} Logs the error to the console and displays an appropriate toast message.
- */
-
-
-export const handleLogin = async (): Promise<void> => {
+export const handleLogin = async (navigate: (path: string, options?: any) => void): Promise<void> => {
+    const { setIsLoggedIn, setOrganization } = useAuthStore.getState(); // Zustand state for auth
     const { formData, setErrors, setLoading } = useLoginStore.getState();
     const validationErrors = validateForm(formData);
 
@@ -45,9 +23,9 @@ export const handleLogin = async (): Promise<void> => {
             // Store credentials
             localStorage.setItem("clientId", clientId);
             localStorage.setItem("clientSecret", clientSecret);
-
-            // Redirect or perform other actions
-            // router.push("/rosterly/projects"); // Uncomment if using routing
+            setIsLoggedIn(true);
+            setOrganization("Rosterly");
+            navigate("/rosterly/projects", { replace: true }); // Use the passed navigate function
         }
     } catch (error: any) {
         console.error("[Error] ==>>", error);
@@ -68,4 +46,3 @@ export const handleLogin = async (): Promise<void> => {
         setLoading(false); // End loading
     }
 };
-

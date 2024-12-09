@@ -1,14 +1,14 @@
 import { LOCAL_AXIOS_INSTANCE } from '@/axios/axios';
 import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card'
-import CustomLink from '@/components/ui/link'
 import Loader from '@/components/ui/loader';
 import { toast } from '@/hooks/use-toast';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { Organization } from '@/types/type';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react'
 
 const ChooseOrg: React.FC = () => {
-
+    const { setIsLoggedIn, setOrganization } = useAuthStore();
     const getOrgList = async () => {
         try {
             const { data } = await LOCAL_AXIOS_INSTANCE.get('/org-list');
@@ -19,13 +19,18 @@ const ChooseOrg: React.FC = () => {
         }
     }
 
-    const { isLoading, isError, data } = useQuery({
+    const { isLoading, data } = useQuery({
         queryKey: ['org-list'],
         queryFn: () => getOrgList() as Promise<Organization[] | any>,
         refetchOnWindowFocus: false
     });
-    console.log(isLoading, isError);
-    console.log(data);
+
+    const handleChooseOrg = (org: Organization) => {
+        localStorage.setItem("cd_id", org.cd_id);
+        localStorage.setItem("cd_secret", org.cd_secret);
+        setIsLoggedIn(true);
+        setOrganization("Rosterly");
+    }
 
     return (
         <Card className="mx-auto max-w-sm w-full">
@@ -41,10 +46,9 @@ const ChooseOrg: React.FC = () => {
                     :
                     <CardContent className="">
                         {
-                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                            data && data?.map((_org: Organization) => (
-                                <div className="mb-2">
-                                    <CustomLink to={`/rosterly/projects`} className="text-xl no-underline hover:underline">Rosterly</CustomLink>
+                            data && data?.map((org: Organization) => (
+                                <div className="mb-2" key={org.id}>
+                                    <p className="text-xl inline no-underline hover:underline cursor-pointer" onClick={() => handleChooseOrg(org)}>Rosterly</p>
                                 </div>
                             ))
                         }

@@ -1,17 +1,18 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginNavbar from './components/custom/navbars/login-navbar';
-import PublicRouteProtector from './services/public-route';
+import { SidebarInset, SidebarProvider } from './components/ui/sidebar';
+import { AppSidebar } from './components/custom/sidebar';
+import PublicRouteProtector from './services/public-route-protector';
+import PrivateRouteProtector from './services/private-route-protector';
+import ProjectPageNavbar from './components/custom/navbars/projects-page-navbar';
 
 
 // Lazy load pages
-const Dashboard = lazy(() => import('./pages/dashboard/dashboard'));
-const Projects = lazy(() => import('./pages/projects/projects'));
-const Settings = lazy(() => import('./pages/settings/setting'));
-const ProtectedRoute = lazy(() => import('./services/protected-route-protector'));
+const LogAnalysis = lazy(() => import('./pages/dashboard/log-analysis/index'));
 const NotFound = lazy(() => import('./pages/not-found/not-found'));
 const Login = lazy(() => import('./pages/login/index'));
-
+const Projects = lazy(() => import('./pages/projects/index'));
 
 
 const router = createBrowserRouter([
@@ -19,54 +20,57 @@ const router = createBrowserRouter([
 		path: "/",
 		element: (
 			<>
-				<LoginNavbar />
 				<Suspense fallback={<div>Loading...</div>}>
 					<PublicRouteProtector>
-						<Login />
+						<>
+							<LoginNavbar />
+							<Login />
+						</>
 					</PublicRouteProtector>
 				</Suspense>
 			</>
 		),
 	},
-	// {
-	// 	path: "/login",
-	// 	element: (
-	// 		<>
-	// 			{/* <Header /> */}
-	// 			<Suspense fallback={<div>Loading...</div>}>
-	// 				<Login />
-	// 			</Suspense>
-	// 			{/* <Footer /> */}
-	// 		</>
-	// 	),
-	// },
 	{
-		path: "/dashboard",
+		path: "/login",
 		element: (
-			<ProtectedRoute>
+			<>
 				<Suspense fallback={<div>Loading...</div>}>
-					<Dashboard />
+					<PublicRouteProtector>
+						<>
+							<LoginNavbar />
+							<Login />
+						</>
+					</PublicRouteProtector>
 				</Suspense>
-			</ProtectedRoute>
+			</>
 		),
-		children: [
-			{
-				path: "Projects",
-				element: (
-					<Suspense fallback={<div>Loading Projects...</div>}>
-						<Projects />
-					</Suspense>
-				),
-			},
-			{
-				path: "settings",
-				element: (
-					<Suspense fallback={<div>Loading Settings...</div>}>
-						<Settings />
-					</Suspense>
-				),
-			},
-		],
+	},
+	{
+		path: "/:organization/projects",
+		element: (
+			<Suspense fallback={<div>Loading...</div>}>
+				<PrivateRouteProtector>
+					<ProjectPageNavbar />
+					<Projects />
+				</PrivateRouteProtector>
+			</Suspense>
+		),
+	},
+	{
+		path: "/:organization/projects/:project_id/log-analysis/:submodule",
+		element: (
+			<Suspense fallback={<div>Loading...</div>}>
+				<PrivateRouteProtector>
+					<SidebarProvider >
+						<AppSidebar variant='inset' />
+						<SidebarInset >
+							<LogAnalysis />
+						</SidebarInset>
+					</SidebarProvider>
+				</PrivateRouteProtector>
+			</Suspense>
+		),
 	},
 	{
 		path: "*",
@@ -83,6 +87,9 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+	useEffect(() => {
+		console.log(window.location.href);
+	}, [window.location.href])
 	return <RouterProvider router={router} />;
 }
 export default App;
