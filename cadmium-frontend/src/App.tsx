@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginNavbar from './components/custom/navbars/login-navbar';
 import { SidebarInset, SidebarProvider } from './components/ui/sidebar';
@@ -87,9 +87,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	useEffect(() => {
-		console.log(window.location.href);
-	}, [window.location.href])
 	return <RouterProvider router={router} />;
 }
 export default App;
