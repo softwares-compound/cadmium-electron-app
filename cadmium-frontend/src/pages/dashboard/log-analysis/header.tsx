@@ -10,9 +10,11 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import ReloadWithTimestamp from '@/components/custom/global/last-reload';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 
 const Header: React.FC = () => {
+    const { organization } = useAuthStore();
     return (
         <header className="flex h-16 shrink-0 items-center gap-2">
             <div className="w-full flex items-center justify-between">
@@ -22,13 +24,13 @@ const Header: React.FC = () => {
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem className="hidden md:block">
-                                <BreadcrumbLink href="/tenant/projects/">
+                                <BreadcrumbLink href={`/${organization.toLowerCase()}/projects`}>
                                     Projects
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />
                             <BreadcrumbItem>
-                                <BreadcrumbPage>Rosterly</BreadcrumbPage>
+                                <BreadcrumbPage>{organization}</BreadcrumbPage>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />
                             <BreadcrumbItem>

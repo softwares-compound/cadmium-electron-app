@@ -12,7 +12,7 @@ const projects: ProjectCardProps[] = [
         src: "/rosterly.png",
         alt: "project logo",
         title: "Rosterly.io",
-        description: "A collection of popular software built with Next.js",
+        description: "AI-Powered Workforce & Financial Management for IT and Professional Firms",
         data: [
             {
                 name: "New Error",
@@ -27,7 +27,7 @@ const projects: ProjectCardProps[] = [
             {
                 name: "Total Error Resolved",
                 value: "281",
-                variant: "success",
+                variant: "outline",
             },
         ],
         onOpen: () => { },
@@ -52,7 +52,7 @@ export default function Projects() {
                             data={project.data}
                             onOpen={() => {
                                 console.log(project.id);
-                                navigate(`/${organization.toLowerCase()}/projects/${project.id}/log-analysis`)
+                                navigate(`/${organization.toLowerCase()}/projects/${project.id}/log-analysis/explorer`)
                             }}
                         />
                     ))}

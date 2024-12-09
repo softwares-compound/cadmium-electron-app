@@ -15,6 +15,10 @@ import {
     SidebarMenuSubButton,
     SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { Badge } from "@/components/ui/badge"
+import { useNavigate } from "react-router-dom"
+import { useAuthStore } from "@/stores/useAuthStore"
+
 export function NavMain({
     items,
 }: {
@@ -26,21 +30,24 @@ export function NavMain({
         items?: {
             title: string
             url: string
+            badge?: string
         }[]
     }[]
 }) {
+    const navigate = useNavigate();
+    const { organization } = useAuthStore();
     return (
         <SidebarGroup>
             <SidebarGroupLabel>Platform</SidebarGroupLabel>
-            <SidebarMenu>
+            <SidebarMenu className="cursor-default">
                 {items.map((item) => (
                     <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
                         <SidebarMenuItem>
-                            <SidebarMenuButton asChild tooltip={item.title}>
-                                <a href={item.url}>
+                            <SidebarMenuButton asChild tooltip={item.title} onClick={() => navigate(`/${organization.toLowerCase()}/projects/fc8457j8-45ti78feh-4w598to-45wtg-45wtg/log-analysis/explorer`)}>
+                                <div>
                                     <item.icon />
                                     <span>{item.title}</span>
-                                </a>
+                                </div>
                             </SidebarMenuButton>
                             {item.items?.length ? (
                                 <>
@@ -55,9 +62,23 @@ export function NavMain({
                                             {item.items?.map((subItem) => (
                                                 <SidebarMenuSubItem key={subItem.title}>
                                                     <SidebarMenuSubButton asChild>
-                                                        <a href={subItem.url}>
-                                                            <span>{subItem.title}</span>
-                                                        </a>
+                                                        <div
+                                                            className="ml-1 flex justify-between items-center gap-2"
+                                                            onClick={() => navigate(`/${organization.toLowerCase()}/projects/fc8457j8-45ti78feh-4w598to-45wtg-45wtg/log-analysis/explorer`)}
+                                                        >
+                                                            <span>
+                                                                <span>{subItem.title}</span>
+                                                            </span>
+                                                            {subItem.badge && (
+                                                                <Badge variant={
+                                                                    subItem.badge === "new" ? "default" :
+                                                                        subItem.badge === "beta" ? "secondary" :
+                                                                            "outline"
+                                                                }>
+                                                                    {subItem.badge}
+                                                                </Badge>
+                                                            )}
+                                                        </div>
                                                     </SidebarMenuSubButton>
                                                 </SidebarMenuSubItem>
                                             ))}

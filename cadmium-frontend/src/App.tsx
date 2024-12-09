@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginNavbar from './components/custom/navbars/login-navbar';
 import { SidebarInset, SidebarProvider } from './components/ui/sidebar';
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
 		),
 	},
 	{
-		path: "/:organization/projects/:project_id/log-analysis",
+		path: "/:organization/projects/:project_id/log-analysis/:submodule",
 		element: (
 			<Suspense fallback={<div>Loading...</div>}>
 				<PrivateRouteProtector>
@@ -87,7 +87,9 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	console.log(window.location.href);
+	useEffect(() => {
+		console.log(window.location.href);
+	}, [window.location.href])
 	return <RouterProvider router={router} />;
 }
 export default App;

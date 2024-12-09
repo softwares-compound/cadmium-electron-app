@@ -44,7 +44,7 @@ export interface Organization {
 export type ProjectCardData = {
     name: string
     value: number | string
-    variant?: "default" | "destructive" | "outline" | "secondary" | "success" | null | undefined
+    variant?: "default" | "destructive" | "outline" | "secondary" | null | undefined
 }
 export type Path = string
 export type ProjectCardProps = {
@@ -79,5 +79,5 @@ export interface TerminalDrawerStoreState {
 
 
 // ****************************************************************************** //
-//! ***************************** LOGIN TYPES *********************************** //
+//! ***************************** LOGS TYPES *********************************** //
 // ****************************************************************************** //
