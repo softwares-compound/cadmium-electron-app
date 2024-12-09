@@ -34,7 +34,10 @@ const Header: React.FC = () => {
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />
                             <BreadcrumbItem>
-                                <BreadcrumbPage>Log analysis</BreadcrumbPage>
+                                <BreadcrumbPage>Log analysis | Explorer</BreadcrumbPage>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <BreadcrumbPage></BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
