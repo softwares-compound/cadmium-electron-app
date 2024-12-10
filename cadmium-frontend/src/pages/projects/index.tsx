@@ -8,7 +8,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 
 const projects: ProjectCardProps[] = [
     {
-        id: "fc8457j8-45ti78feh-4w598to-45wtg-45wtg",
+        id: "673d6733caa30090be5b410d",
         src: "/rosterly.png",
         alt: "project logo",
         title: "Rosterly.io",

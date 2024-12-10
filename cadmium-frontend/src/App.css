@@ -14,8 +14,8 @@ button:hover {
   :root {
     --background: 210 40% 98%;
     --foreground: 222.2 84% 4.9%;
-    --card: 210 40% 98%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 210 40% 96.1%;
+    --card-foreground: 217.2 32.6% 17.5%;
     --popover: 210 40% 98%;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 222.2 47.4% 11.2%;
@@ -37,7 +37,7 @@ button:hover {
     --chart-4: 215.3 25% 26.7%;
     --chart-5: 215.3 19.3% 34.5%;
     --radius: 0.5rem;
-    --sidebar-background: 240 4.8% 95.9%;
+    --sidebar-background: 210 40% 96.1%;
     --sidebar-foreground: 222.2 84% 4.9%;
     --sidebar-primary: 214.3 31.8% 91.4%;
     --sidebar-primary-foreground: 217.2 32.6% 17.5%;
@@ -50,8 +50,8 @@ button:hover {
   .dark {
     --background: 222.2 47.4% 11.2%;
     --foreground: 210 40% 96.1%;
-    --card: 222.2 47.4% 11.2%;
-    --card-foreground: 210 40% 96.1%;
+    --card: 217.2 32.6% 17.5%;
+    --card-foreground: 214.3 31.8% 91.4%;
     --popover: 222.2 47.4% 11.2%;
     --popover-foreground: 210 40% 96.1%;
     --primary: 210 40% 96.1%;
@@ -91,6 +91,7 @@ button:hover {
   body {
     @apply bg-background text-foreground;
     @apply leading-normal;
+    @apply text-tiny;
   }
 }
 

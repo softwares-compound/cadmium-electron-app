@@ -1,10 +1,18 @@
 import { toast } from "@/hooks/use-toast";
 import { LOCAL_AXIOS_INSTANCE } from "@/axios/axios";
 import { useLoginStore } from "@/stores/useLoginStore";
-import { validateForm } from "./validate-form";
+import { validateForm } from "../pages/login/validate-form";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { NavigateFunction } from "react-router-dom";
 
-export const handleLogin = async (navigate: (path: string, options?: any) => void): Promise<void> => {
+/**
+ * Handles the login process by sending a POST request to the local server
+ * and handles the response.
+ *
+ * @param navigate - The navigate function from react-router-dom.
+ * @returns A promise that resolves when the login process is complete.
+ */
+export const handleLogin = async (navigate: NavigateFunction): Promise<void> => {
     const { setIsLoggedIn, setOrganization } = useAuthStore.getState(); // Zustand state for auth
     const { formData, setErrors, setLoading } = useLoginStore.getState();
     const validationErrors = validateForm(formData);
@@ -46,3 +54,4 @@ export const handleLogin = async (navigate: (path: string, options?: any) => voi
         setLoading(false); // End loading
     }
 };
+

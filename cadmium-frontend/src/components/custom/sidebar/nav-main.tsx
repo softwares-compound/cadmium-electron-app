@@ -43,7 +43,7 @@ export function NavMain({
                 {items.map((item) => (
                     <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
                         <SidebarMenuItem>
-                            <SidebarMenuButton asChild tooltip={item.title} onClick={() => navigate(`/${organization.toLowerCase()}/projects/fc8457j8-45ti78feh-4w598to-45wtg-45wtg/log-analysis/explorer`)}>
+                            <SidebarMenuButton asChild tooltip={item.title} onClick={() => navigate(`/${organization.toLowerCase()}/projects/673d6733caa30090be5b410d/${item.url}/${item.items?.length ? item.items[0].url : ""}`)}>
                                 <div>
                                     <item.icon />
                                     <span>{item.title}</span>
@@ -64,7 +64,7 @@ export function NavMain({
                                                     <SidebarMenuSubButton asChild>
                                                         <div
                                                             className="ml-1 flex justify-between items-center gap-2"
-                                                            onClick={() => navigate(`/${organization.toLowerCase()}/projects/fc8457j8-45ti78feh-4w598to-45wtg-45wtg/log-analysis/explorer`)}
+                                                            onClick={() => navigate(`/${organization.toLowerCase()}/projects/673d6733caa30090be5b410d/${item.url}/${subItem.url}`)}
                                                         >
                                                             <span>
                                                                 <span>{subItem.title}</span>

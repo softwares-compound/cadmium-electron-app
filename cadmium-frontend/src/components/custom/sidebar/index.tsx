@@ -3,13 +3,14 @@ import * as React from "react"
 import {
     BookOpen,
     Bot,
-    Command,
+    // Command,
     // Frame,
     LifeBuoy,
+    ListChecks,
     // Map,
     // PieChart,
     Send,
-    Settings2,
+    ShieldCheck,
     SquareTerminal,
 } from "lucide-react"
 
@@ -37,47 +38,30 @@ const data = {
     navMain: [
         {
             title: "Log Analysis",
-            url: "#",
+            url: "log-analysis",
             icon: SquareTerminal,
             isActive: true,
             items: [
                 {
                     title: "Explorer",
-                    url: "#",
+                    url: "explorer",
                     // badge: "new",
                 },
                 {
                     title: "Analyze",
-                    url: "#",
+                    url: "analyze",
                     badge: "beta",
                 },
                 {
                     title: "Configure",
-                    url: "#",
-                    badge: "soon",
-                },
-            ],
-        },
-        {
-            title: "Code Analysis",
-            url: "#",
-            icon: Bot,
-            items: [
-                {
-                    title: "Genesis",
-                    url: "#",
+                    url: "configure",
                     badge: "soon",
                 },
                 {
-                    title: "Explorer",
-                    url: "#",
+                    title: "Settings",
+                    url: "settings",
                     badge: "soon",
-                },
-                {
-                    title: "Quantum",
-                    url: "#",
-                    badge: "soon",
-                },
+                }
             ],
         },
         {
@@ -108,9 +92,31 @@ const data = {
             ],
         },
         {
+            title: "Code Analysis",
+            url: "#",
+            icon: Bot,
+            items: [
+                {
+                    title: "Genesis",
+                    url: "#",
+                    badge: "soon",
+                },
+                {
+                    title: "Explorer",
+                    url: "#",
+                    badge: "soon",
+                },
+                {
+                    title: "Quantum",
+                    url: "#",
+                    badge: "soon",
+                },
+            ],
+        },
+        {
             title: "Unit Testing",
             url: "#",
-            icon: Settings2,
+            icon: ListChecks,
             // items: [
             //     {
             //         title: "General",
@@ -133,7 +139,7 @@ const data = {
         {
             title: "Security and Vulnerabilities",
             url: "#",
-            icon: Settings2,
+            icon: ShieldCheck,
             // items: [
             //     {
             //         title: "General",
@@ -194,10 +200,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <SidebarMenuButton size="lg" asChild>
                             <CustomLink to="/rosterly/projects/">
                                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                                    <Command className="size-4" />
+                                    <img src="/rosterly.png" alt="" className="rounded-sm" />
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-semibold">Acme Inc</span>
+                                    <span className="truncate font-semibold">Rosterly.io</span>
                                     <span className="truncate text-xs">Enterprise</span>
                                 </div>
                             </CustomLink>

@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginNavbar from './components/custom/navbars/login-navbar';
 import { SidebarInset, SidebarProvider } from './components/ui/sidebar';
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
 		path: "/",
 		element: (
 			<>
-				<Suspense fallback={<div>Loading...</div>}>
+				<Suspense fallback={<div className='text-center'>Loading...</div>}>
 					<PublicRouteProtector>
 						<>
 							<LoginNavbar />
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
 		path: "/login",
 		element: (
 			<>
-				<Suspense fallback={<div>Loading...</div>}>
+				<Suspense fallback={<div className='text-center'>Loading...</div>}>
 					<PublicRouteProtector>
 						<>
 							<LoginNavbar />
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
 	{
 		path: "/:organization/projects",
 		element: (
-			<Suspense fallback={<div>Loading...</div>}>
+			<Suspense fallback={<div className='text-center'>Loading...</div>}>
 				<PrivateRouteProtector>
 					<ProjectPageNavbar />
 					<Projects />
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
 	{
 		path: "/:organization/projects/:project_id/log-analysis/:submodule",
 		element: (
-			<Suspense fallback={<div>Loading...</div>}>
+			<Suspense fallback={<div className='text-center'>Loading...</div>}>
 				<PrivateRouteProtector>
 					<SidebarProvider >
 						<AppSidebar variant='inset' />
@@ -77,7 +77,7 @@ const router = createBrowserRouter([
 		element: (
 			<>
 				{/* <Header /> */}
-				<Suspense fallback={<div>Loading...</div>}>
+				<Suspense fallback={<div className='text-center'>Loading...</div>}>
 					<NotFound />
 				</Suspense>
 				{/* <Footer /> */}
@@ -87,9 +87,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	useEffect(() => {
-		console.log(window.location.href);
-	}, [window.location.href])
 	return <RouterProvider router={router} />;
 }
 export default App;
