@@ -6,10 +6,11 @@ import {
     // Command,
     // Frame,
     LifeBuoy,
+    ListChecks,
     // Map,
     // PieChart,
     Send,
-    Settings2,
+    ShieldCheck,
     SquareTerminal,
 } from "lucide-react"
 
@@ -56,6 +57,11 @@ const data = {
                     url: "configure",
                     badge: "soon",
                 },
+                {
+                    title: "Settings",
+                    url: "settings",
+                    badge: "soon",
+                }
             ],
         },
         {
@@ -89,28 +95,28 @@ const data = {
             title: "Code Analysis",
             url: "#",
             icon: Bot,
-            // items: [
-            //     {
-            //         title: "Genesis",
-            //         url: "#",
-            //         badge: "soon",
-            //     },
-            //     {
-            //         title: "Explorer",
-            //         url: "#",
-            //         badge: "soon",
-            //     },
-            //     {
-            //         title: "Quantum",
-            //         url: "#",
-            //         badge: "soon",
-            //     },
-            // ],
+            items: [
+                {
+                    title: "Genesis",
+                    url: "#",
+                    badge: "soon",
+                },
+                {
+                    title: "Explorer",
+                    url: "#",
+                    badge: "soon",
+                },
+                {
+                    title: "Quantum",
+                    url: "#",
+                    badge: "soon",
+                },
+            ],
         },
         {
             title: "Unit Testing",
             url: "#",
-            icon: Settings2,
+            icon: ListChecks,
             // items: [
             //     {
             //         title: "General",
@@ -133,7 +139,7 @@ const data = {
         {
             title: "Security and Vulnerabilities",
             url: "#",
-            icon: Settings2,
+            icon: ShieldCheck,
             // items: [
             //     {
             //         title: "General",
