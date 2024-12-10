@@ -27,7 +27,6 @@ export function SolutionSlideOver({
     errorLog,
     onMarkResolved,
 }: SlideOverProps) {
-    console.log("errorLog", errorLog);
 
     if (!errorLog) {
         return null;

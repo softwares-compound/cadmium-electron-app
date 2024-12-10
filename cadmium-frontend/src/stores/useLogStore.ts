@@ -9,4 +9,10 @@ export const useLogStore = create<LogStoreState>((set) => ({
     setOpenSlideOver: (openSlideOver: boolean) => set({ openSlideOver }),
     selectedLog: null,
     setSelectedLog: (selectedLog: LogTableEntry) => set({ selectedLog }),
+    page: 1,
+    setPage: (page: number) => set({ page }),
+    limit: 10,
+    setLimit: (limit: number) => set({ limit }),
+    tableData: [],
+    setTableData: (tableData: LogTableEntry[]) => set({ tableData }),
 }));

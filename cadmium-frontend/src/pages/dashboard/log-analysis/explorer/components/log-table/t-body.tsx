@@ -32,7 +32,7 @@ const TBody: React.FC<Props> = ({ tableData, onRowClick }) => {
                     <TableCell>
                         <HttpMethodBadge variant={data.method}>{data.method}</HttpMethodBadge>
                     </TableCell>
-                    <TableCell className="text-left">{addEllipsis(data.error, 200)}</TableCell>
+                    <TableCell className="text-left">{addEllipsis(data.error, 100)}</TableCell>
                     <TableCell
                         className="text-right"
                         onClick={(e) => e.stopPropagation()}

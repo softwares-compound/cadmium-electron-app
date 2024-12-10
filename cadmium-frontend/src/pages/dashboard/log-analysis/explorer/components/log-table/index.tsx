@@ -18,14 +18,11 @@ const LogTable: React.FC = () => {
     const cd_id = localStorage.getItem("cd_id") ?? "";
     const cd_secret = localStorage.getItem("cd_secret") ?? "";;
     const { project_id } = useParams<{ project_id: string }>();
-    console.log(cd_id, cd_secret, project_id);
     const { isLoading, error, data: tableData } = useQuery({
         queryKey: ['log-table', cd_id, cd_secret, project_id],
         queryFn: () => fetchLogTableData(cd_id, cd_secret, project_id ?? ""),
         refetchOnWindowFocus: false
     })
-    console.log(tableData);
-
     const handleRowClick = async (data: LogTableEntry) => {
         setOpenSlideOver(true);
         setSelectedLog(data);

@@ -91,6 +91,13 @@ export interface FormattedRagResponse {
 // Type for rag_response object
 export interface RagResponse {
     formatted_rag_response: FormattedRagResponse[];
+    rag_response: {
+        application_id: string;
+        created_at: string; // ISO 8601 format
+        processed_at: string; // ISO 8601 format
+        query: string;
+        rag_response: string;
+    };
     application_id: string;
     created_at: string; // ISO 8601 format
     query: string;
@@ -119,4 +126,10 @@ export interface LogStoreState {
     setOpenSlideOver: (openSlideOver: boolean) => void;
     selectedLog: LogTableEntry | null;
     setSelectedLog: (selectedLog: LogTableEntry) => void;
+    page: number;
+    setPage: (page: number) => void;
+    limit: number;
+    setLimit: (limit: number) => void;
+    tableData: LogData | null;
+    setTableData: (tableData: LogData) => void;
 }
