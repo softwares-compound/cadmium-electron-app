@@ -91,6 +91,7 @@ button:hover {
   body {
     @apply bg-background text-foreground;
     @apply leading-normal;
+    @apply text-tiny;
   }
 }
 
