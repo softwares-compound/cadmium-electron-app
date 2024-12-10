@@ -9,10 +9,11 @@ import {
 } from "@/components/ui/sheet";
 import { Typography } from "@/components/ui/typography";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import CodeBlock from "./code-block";
-import { Copy } from "lucide-react";
+// import CodeBlock from "./code-block";
+// import { Copy } from "lucide-react";
 import { LogTableEntry } from "@/types/type";
 import ReactMarkdown from "react-markdown";
+import { HttpMethodBadge } from "../log-table/http-methods";
 
 export interface SlideOverProps {
     open: boolean;
@@ -63,9 +64,9 @@ export function SolutionSlideOver({
                         <Typography variant="small" className="font-semibold">
                             HTTP Method
                         </Typography>
-                        <Typography variant="sm" className="text-muted-foreground">
+                        <HttpMethodBadge variant={errorLog.method} className="">
                             {errorLog.method}
-                        </Typography>
+                        </HttpMethodBadge>
                     </div>
                     <div>
                         <Typography variant="small" className="font-semibold">
@@ -81,7 +82,7 @@ export function SolutionSlideOver({
                                 Possible Resolution Steps
                             </Typography>
                             <div>
-                                {errorLog.ragInference.rag_response?.formatted_rag_response.map((item, index) => (
+                                {/* {errorLog.ragInference.rag_response?.formatted_rag_response.map((item, index) => (
                                     <div key={index} className="mb-4">
                                         {item.type === "markdown" && (
                                             <div className="text-xs">
@@ -109,7 +110,10 @@ export function SolutionSlideOver({
                                             </div>
                                         )}
                                     </div>
-                                ))}
+                                ))} */}
+                                <div className="text-xs">
+                                    <ReactMarkdown>{errorLog.ragInference.rag_response?.rag_response.rag_response}</ReactMarkdown>
+                                </div>
                             </div>
                         </div>
                     ) : (

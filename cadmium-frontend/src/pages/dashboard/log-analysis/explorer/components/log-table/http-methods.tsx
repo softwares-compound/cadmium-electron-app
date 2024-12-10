@@ -14,7 +14,7 @@ const httpMethodBadgeVariants = cva(
                 PUT: "border-yellow-600 bg-yellow-600/20 text-yellow-600 shadow",
                 PATCH: "border-secondary-foreground bg-secondary text-secondary-foreground shadow",
                 DELETE:
-                    "border-destructive bg-destructive-light text-destructive dark:text-destructive-foreground shadow",
+                    "border-destructive bg-destructive-light text-destructive shadow",
             },
         },
         defaultVariants: {
