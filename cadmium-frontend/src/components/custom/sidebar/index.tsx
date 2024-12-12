@@ -57,11 +57,6 @@ const data = {
                     url: "configure",
                     badge: "soon",
                 },
-                {
-                    title: "Settings",
-                    url: "settings",
-                    badge: "soon",
-                }
             ],
         },
         {

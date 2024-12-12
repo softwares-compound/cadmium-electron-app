@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { HttpMethodBadge } from "./http-methods";
@@ -28,13 +27,13 @@ const TBody: React.FC<Props> = ({ tableData, onRowClick }) => {
                     onClick={() => handleRowClick(data)}
                 >
                     <TableCell className="font-medium">{new Date(data.createdAt).toLocaleString()}</TableCell>
-                    <TableCell>{data.url}</TableCell>
-                    <TableCell>
+                    <TableCell className="text-left ">{addEllipsis(data.error, 100, 3)}</TableCell>
+                    <TableCell className="">
                         <HttpMethodBadge variant={data.method}>{data.method}</HttpMethodBadge>
                     </TableCell>
-                    <TableCell className="text-left">{addEllipsis(data.error, 100)}</TableCell>
+                    <TableCell className="">{addEllipsis(data.url, 30, 30)}</TableCell>
                     <TableCell
-                        className="text-right"
+                        className="text-right "
                         onClick={(e) => e.stopPropagation()}
                     >
                         <ActionButton />
