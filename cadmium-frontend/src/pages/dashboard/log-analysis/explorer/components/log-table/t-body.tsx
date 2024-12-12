@@ -4,6 +4,7 @@ import { HttpMethodBadge } from "./http-methods";
 import { LogTableEntry } from "@/types/type";
 import addEllipsis from "@/lib/ellipsis";
 import ActionButton from "./action";
+import { getApiEndpoint } from "@/lib/getApiEndpoint";
 
 
 type Props = {
@@ -31,7 +32,7 @@ const TBody: React.FC<Props> = ({ tableData, onRowClick }) => {
                     <TableCell className="">
                         <HttpMethodBadge variant={data.method}>{data.method}</HttpMethodBadge>
                     </TableCell>
-                    <TableCell className="">{addEllipsis(data.url, 30, 30)}</TableCell>
+                    <TableCell className="">{getApiEndpoint(data.url)}</TableCell>
                     <TableCell
                         className="text-right "
                         onClick={(e) => e.stopPropagation()}
