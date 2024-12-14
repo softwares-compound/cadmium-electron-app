@@ -128,8 +128,14 @@ export interface LogStoreState {
     setSelectedLog: (selectedLog: LogTableEntry) => void;
     page: number;
     setPage: (page: number) => void;
+    incrementPage: () => void;
+    decrementPage: () => void;
     limit: number;
     setLimit: (limit: number) => void;
-    tableData: LogData | null;
-    setTableData: (tableData: LogData) => void;
+    tableData: LogTableEntry[];
+    setTableData: (tableData: LogTableEntry[]) => void;
+    appendTableData: (newData: LogTableEntry[]) => void;
+    resetTableData: () => void;
+    totalLogs: number | null; // Add this
+    setTotalLogs: (totalLogs: number) => void; // Add this
 }

@@ -95,6 +95,45 @@ button:hover {
   }
 }
 
+@layer utilities {
+
+  /* * SCROLL BAR */
+  /* For Webkit browsers (Chrome, Safari) */
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 5px;
+    border-radius: 4px;
+    display: none;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #81818142;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #bfc0c9;
+    border-radius: 4px;
+  }
+
+  /* For Firefox */
+  ::-moz-scrollbar {
+    width: 2px;
+    height: 5px;
+    border-radius: 4px;
+  }
+
+  ::-moz-scrollbar-track {
+    background: #163141;
+    border-radius: 4px;
+  }
+
+  ::-moz-scrollbar-thumb {
+    background: #3ab2bb;
+    border-radius: 4px;
+  }
+}
+
 .debug {
   border: 1px solid red;
 }
