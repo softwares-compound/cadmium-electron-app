@@ -31,7 +31,7 @@ const LogTable: React.FC = () => {
 
     const { isLoading, error } = useQuery({
         queryKey: ['log-table', cd_id, cd_secret, project_id],
-        queryFn: () => fetchLogTableData(cd_id, cd_secret, project_id ?? ""),
+        queryFn: () => fetchLogTableData(project_id ?? ""),
         refetchOnWindowFocus: false
     })
 
@@ -42,7 +42,7 @@ const LogTable: React.FC = () => {
     const fetchMoreData = () => {
         if (!loading && tableData.length < (totalLogs || Infinity)) {
             incrementPage();
-            fetchLogTableData(cd_id, cd_secret, project_id ?? "");
+            fetchLogTableData(project_id ?? "");
         }
     };
 

@@ -46,16 +46,33 @@ export type ProjectCardData = {
     value: number | string
     variant?: "default" | "destructive" | "outline" | "secondary" | null | undefined
 }
-export type Path = string
+
 export type ProjectCardProps = {
     id: string
-    src: Path
-    alt: string
     title: string
     description: string
     data: ProjectCardData[]
     onOpen: () => void
 }
+
+export interface Project {
+    id: string;
+    name: string;
+    description: string;
+    errorCount: number;
+    codeSuggestionCount: number;
+    totalErrorResolved: number;
+}
+
+export type ProjectList = Project[]
+
+export interface ProjectState {
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    projects: ProjectList;
+    setProjects: (projects: ProjectList) => void;
+}
+
 
 export interface TerminalDrawerStoreState {
     loading: boolean;
@@ -63,17 +80,6 @@ export interface TerminalDrawerStoreState {
     openDrawer: boolean;
     setOpenDrawer: (openDrawer: boolean) => void;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

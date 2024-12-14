@@ -10,20 +10,16 @@ import {
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ProjectCardProps } from '@/types/type'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
 const ProjectCard: React.FC<ProjectCardProps> = (props: ProjectCardProps) => {
     return (
         <Card className="w-[320px]">
             <CardHeader className="bg-muted rounded-t-md">
                 <div className="flex items-center gap-x-4 border-b">
-                    <img
-                        src={props.src}
-                        alt="Product"
-                        width={400}
-                        height={500}
-                        className="size-12 flex-none rounded-lg object-cover ring-1 ring-ring"
-                        style={{ aspectRatio: "400/500", objectFit: "cover" }}
-                    />
+                    <Avatar className="h-10 w-10 rounded-lg font-bold text-base">
+                        <AvatarFallback className="rounded-lg bg-muted-foreground">{props.title.slice(0, 2).toUpperCase()}</AvatarFallback>
+                    </Avatar>
                     <CardHeader className="p-0">
                         <CardTitle>{props.title}</CardTitle>
                         <CardDescription className="text-xs">{props.description}</CardDescription>

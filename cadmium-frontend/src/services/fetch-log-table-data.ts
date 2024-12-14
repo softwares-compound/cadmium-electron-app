@@ -9,8 +9,10 @@ import { LogTableEntry, RagResponse } from '@/types/type';
  * @param {string} application_id - The ID of the application.
  * @returns {Promise<LogTableEntry[] | null>} A promise resolving to an array of log table entries or null if there was an error.
  */
-export const fetchLogTableData = async (cd_id: string, cd_secret: string, application_id: string): Promise<LogTableEntry[] | null> => {
+export const fetchLogTableData = async (application_id: string): Promise<LogTableEntry[] | null> => {
     const { setLoading, limit, page, appendTableData } = useLogStore.getState(); // Zustand state for log
+    const cd_id = localStorage.getItem("cd_id") ?? "";
+    const cd_secret = localStorage.getItem("cd_secret") ?? "";
     const headers = {
         'Content-Type': 'application/json',
         'CD-ID': cd_id,
