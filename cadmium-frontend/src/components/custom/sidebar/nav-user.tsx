@@ -26,7 +26,7 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar"
-import { handleLogout } from "@/services/handle-logout"
+import { handleLogout } from "@/services/api/handle-logout"
 import { useNavigate } from "react-router-dom"
 export function NavUser({
     user,

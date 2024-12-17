@@ -63,6 +63,7 @@ export interface Project {
     codeSuggestionCount: number;
     totalErrorResolved: number;
     isConnectedToRemote: boolean;
+    remoteUrl: string;
 }
 
 export type ProjectList = Project[]
@@ -76,6 +77,8 @@ export interface CreateProjectState {
     setLoading: (loading: boolean) => void;
     openModal: boolean;
     setOpenModal: (openModal: boolean) => void
+    errors: { name?: string; description?: string; };
+    setErrors: (errors: { name?: string; description?: string; }) => void;
 }
 
 export interface ProjectState {

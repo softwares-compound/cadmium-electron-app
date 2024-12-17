@@ -10,5 +10,7 @@ export const useProjectCreateStore = create<CreateProjectState>((set) => ({
     setLoading: (loading: boolean) => set({ loading }),
     openModal: false,
     setOpenModal: (openModal: boolean) => set({ openModal }),
+    errors: { name: "", description: "" },
+    setErrors: (errors) => set({ errors }),
 }));
 

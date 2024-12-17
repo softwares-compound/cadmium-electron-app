@@ -7,7 +7,7 @@ import { LoginFormData, LoginFormErrors } from "@/types/type";
  * @param formData - The form data to validate.
  * @returns An object containing validation errors, if any.
  */
-export const validateForm = (formData: LoginFormData): LoginFormErrors => {
+export const validateLoginForm = (formData: LoginFormData): LoginFormErrors => {
     const errors: LoginFormErrors = {};
     if (!formData.clientId.trim()) {
         errors.clientId = "Client ID is required.";

@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import CustomLink from "@/components/ui/link";
 import { useLoginStore } from "@/stores/useLoginStore";
-import { handleLogin } from "../../services/handle-login";
+import { handleLogin } from "../../services/api/handle-login";
 import { useNavigate } from "react-router-dom";
 
 export function LoginForm() {

@@ -7,16 +7,38 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import { useProjectCreateStore } from "@/stores/useProjectCreateStore";
 
-
 export default function AddProject() {
-    const { setName, setDescription, setOpenModal } = useProjectCreateStore();
+    const { setName, setDescription, setOpenModal, name, description, loading, setLoading, errors, setErrors } = useProjectCreateStore();
+
+
+    const validateForm = () => {
+        const newErrors = { name: "" };
+
+        if (!name.trim()) {
+            newErrors.name = "Project name is required.";
+        }
+
+        setErrors(newErrors);
+
+        return !newErrors.name; // Return true if no errors
+    };
+
+    const handleSubmit = () => {
+        if (validateForm()) {
+            setLoading(true);
+            // Add form submission logic here (e.g., API call)
+            console.log("Form Submitted:", { name, description });
+            setOpenModal(false);
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="text-center">
@@ -27,7 +49,6 @@ export default function AddProject() {
             <Typography variant="sm" className="mt-1 text-muted-foreground">
                 Get started by creating a new project.
             </Typography>
-
 
             <Dialog>
                 <DialogTrigger asChild>
@@ -42,7 +63,7 @@ export default function AddProject() {
                     <DialogHeader>
                         <DialogTitle>New project</DialogTitle>
                         <DialogDescription>
-                            Make changes to your profile here. Click save when you're done.
+                            Make changes to your project here. Click save when you're done.
                         </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
@@ -50,12 +71,18 @@ export default function AddProject() {
                             <Label htmlFor="project-name" className="text-right">
                                 Project name <span>*</span>
                             </Label>
-                            <Input
-                                id="project-name"
-                                className="col-span-3"
-                                required
-                                onChange={(e) => setName(e.target.value)}
-                            />
+                            <div className="col-span-3">
+                                <Input
+                                    id="project-name"
+                                    value={name}
+                                    className="col-span-3"
+                                    required
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                                {errors.name && (
+                                    <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                                )}
+                            </div>
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="description" className="text-right">
@@ -63,13 +90,21 @@ export default function AddProject() {
                             </Label>
                             <Input
                                 id="description"
+                                value={description}
                                 className="col-span-3"
                                 onChange={(e) => setDescription(e.target.value)}
                             />
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button type="submit">Save</Button>
+                        <Button
+                            type="button"
+                            disabled={loading || !name.trim()}
+                            onClick={handleSubmit}
+                            loading={loading}
+                        >
+                            Save
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

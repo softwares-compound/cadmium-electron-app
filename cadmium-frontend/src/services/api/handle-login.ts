@@ -1,7 +1,7 @@
 import { toast } from "@/hooks/use-toast";
 import { LOCAL_AXIOS_INSTANCE } from "@/axios/axios";
 import { useLoginStore } from "@/stores/useLoginStore";
-import { validateForm } from "../pages/login/validate-form";
+import { validateLoginForm } from "../validation/login-form";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { NavigateFunction } from "react-router-dom";
 
@@ -15,7 +15,7 @@ import { NavigateFunction } from "react-router-dom";
 export const handleLogin = async (navigate: NavigateFunction): Promise<void> => {
     const { setIsLoggedIn, setOrganization } = useAuthStore.getState(); // Zustand state for auth
     const { formData, setErrors, setLoading } = useLoginStore.getState();
-    const validationErrors = validateForm(formData);
+    const validationErrors = validateLoginForm(formData);
 
     if (Object.keys(validationErrors).length > 0) {
         setErrors(validationErrors);

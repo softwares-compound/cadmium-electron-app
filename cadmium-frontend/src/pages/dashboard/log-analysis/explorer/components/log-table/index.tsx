@@ -7,7 +7,7 @@ import TBody from './t-body';
 import { SolutionSlideOver } from '../Solution-SlideOver';
 import { Typography } from '@/components/ui/typography';
 import { useParams } from "react-router-dom";
-import { fetchLogTableData } from "@/services/fetch-log-table-data";
+import { fetchLogTableData } from "@/services/api/fetch-log-table-data";
 import { useQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroll-component';
 

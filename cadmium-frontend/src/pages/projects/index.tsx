@@ -2,7 +2,7 @@ import ProjectCard from "./project-card";
 import AddProject from "./add-project";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { fetchProjectList } from "@/services/fetch-projects--list";
+import { fetchProjectList } from "@/services/api/fetch-projects--list";
 import { useProjectListStore } from "@/stores/useProjectListStore";
 import { useQuery } from "@tanstack/react-query";
 
