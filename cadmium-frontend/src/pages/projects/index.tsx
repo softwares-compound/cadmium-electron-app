@@ -3,12 +3,12 @@ import AddProject from "./add-project";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { fetchProjectList } from "@/services/fetch-projects--list";
-import { useProjectStore } from "@/stores/useProjectStore";
+import { useProjectListStore } from "@/stores/useProjectListStore";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Projects() {
     const { organization } = useAuthStore();
-    const { projects } = useProjectStore();
+    const { projectList } = useProjectListStore();
     const navigate = useNavigate();
     useQuery({
         queryKey: ['projects',],
@@ -20,7 +20,7 @@ export default function Projects() {
         <div className="flex flex-col min-h-[calc(100vh-7vh)] w-full items-center justify-center px-4 ">
             <div className="flex flex-1 flex-col justify-center gap-4 p-4 pt-0">
                 <div className="grid auto-rows-min gap-4 xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {projects.map((project, index) => (
+                    {projectList.map((project, index) => (
                         <ProjectCard
                             id={project.id}
                             key={index}

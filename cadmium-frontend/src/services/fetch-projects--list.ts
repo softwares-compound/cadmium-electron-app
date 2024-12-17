@@ -1,9 +1,9 @@
 import { CLOUD_AXIOS_INSTANCE } from "@/axios/axios";
-import { useProjectStore } from "@/stores/useProjectStore";
+import { useProjectListStore } from "@/stores/useProjectListStore";
 import { ProjectList } from "@/types/type";
 
 export const fetchProjectList = async () => {
-    const { setLoading, setProjects } = useProjectStore.getState();
+    const { setLoading, setProjectList } = useProjectListStore.getState();
     const cd_id = localStorage.getItem("cd_id") ?? "";
     const cd_secret = localStorage.getItem("cd_secret") ?? "";
     try {
@@ -27,7 +27,7 @@ export const fetchProjectList = async () => {
             codeSuggestionCount: project.code_suggestion_count ?? 0,
             totalErrorResolved: project.total_error_resolved ?? 0,
         }))
-        setProjects(projectList);
+        setProjectList(projectList);
         return projectList
     } catch (error) {
         console.error('Error fetching projects:', error);

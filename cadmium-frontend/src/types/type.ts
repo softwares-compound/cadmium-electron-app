@@ -62,15 +62,27 @@ export interface Project {
     errorCount: number;
     codeSuggestionCount: number;
     totalErrorResolved: number;
+    isConnectedToRemote: boolean;
 }
 
 export type ProjectList = Project[]
 
+export interface CreateProjectState {
+    name: string;
+    setName: (name: string) => void;
+    description: string;
+    setDescription: (description: string) => void;
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    openModal: boolean;
+    setOpenModal: (openModal: boolean) => void
+}
+
 export interface ProjectState {
     loading: boolean;
     setLoading: (loading: boolean) => void;
-    projects: ProjectList;
-    setProjects: (projects: ProjectList) => void;
+    projectList: ProjectList;
+    setProjectList: (projects: ProjectList) => void;
 }
 
 
