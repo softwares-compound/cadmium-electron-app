@@ -3,7 +3,7 @@
  * @description Contains the API call logic for creating a project.
  */
 
-import { CLOUD_AXIOS_INSTANCE } from "@/axios/axios";
+import { CLOUD_AXIOS_INSTANCE, LOCAL_AXIOS_INSTANCE } from "@/axios/axios";
 import { useProjectCreateStore } from "@/stores/useProjectCreateStore";
 
 /**
@@ -32,8 +32,25 @@ export const createProject = async (): Promise<object> => {
         if (response.status != 200) {
             throw new Error("Failed to create project");
         }
+
+        const application_id = response.data.application_id;
+        const body = {
+            project_id: application_id,
+            organization_id: cd_id,
+            application_name: name,
+            application_description: description,
+        };
+        const localResp = await LOCAL_AXIOS_INSTANCE.post(`/project`, {
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json",
+                "CD-ID": cd_id,
+                "CD-Secret": cd_secret
+            },
+        })
+        console.log("localResp -=-=-=-=-", localResp);
         setOpenModal(false);
-        console.log("Project created successfully:", response.data);
+        console.log("Project created successfully:", application_id);
         return response.data;
     } catch (error) {
         console.error("Error creating project:", error);

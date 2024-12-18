@@ -31,6 +31,8 @@ export const handleLogin = async (navigate: NavigateFunction): Promise<void> => 
             // Store credentials
             localStorage.setItem("clientId", clientId);
             localStorage.setItem("clientSecret", clientSecret);
+            localStorage.setItem("organizationId", resp.data.organization_id);
+            localStorage.setItem("organizationName", resp.data.organization_name);
             setIsLoggedIn(true);
             setOrganization("Rosterly");
             navigate("/rosterly/projects", { replace: true }); // Use the passed navigate function

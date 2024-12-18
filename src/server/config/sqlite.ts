@@ -27,8 +27,21 @@ export function initializeDB() {
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               cd_id TEXT NOT NULL UNIQUE,
               cd_secret TEXT NOT NULL UNIQUE,
+              organization_id TEXT NOT NULL UNIQUE,
+              organization_name TEXT NOT NULL,
               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
+            );
+            
+            CREATE TABLE IF NOT EXISTS projects (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              name TEXT NOT NULL,
+              description TEXT,
+              organization_id INTEGER NOT NULL,
+              is_connected_to_remote BOOLEAN DEFAULT 0,
+              remote_url TEXT,
+              created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+              FOREIGN KEY (organization_id) REFERENCES organization_detail (id)
+            );
         `);
         console.log('Database initialized.');
     } catch (error) {

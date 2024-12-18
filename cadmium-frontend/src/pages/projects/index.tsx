@@ -44,7 +44,6 @@ export default function Projects() {
                                 }
                             ]}
                             onOpen={() => {
-                                console.log(project.id);
                                 navigate(`/${organization.toLowerCase()}/projects/${project.id}/log-analysis/explorer`)
                             }}
                         />
