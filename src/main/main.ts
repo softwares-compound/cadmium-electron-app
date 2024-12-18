@@ -17,12 +17,13 @@ function createWindow() {
             nodeIntegration: true,
             contextIsolation: true,
         },
+        icon: path.join(__dirname, '../../cadmium-frontend/public/cd_logo.png'),
     });
 
     const startUrl =
         process.env.NODE_ENV === 'development'
             ? 'http://localhost:5173'
-            : `file://${path.join(__dirname, '../react-app/build/index.html')}`;
+            : `file://${path.join(__dirname, '../../cadmium-frontend/build/index.html')}`;
 
     mainWindow.loadURL(startUrl);
 

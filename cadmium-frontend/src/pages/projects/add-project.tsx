@@ -13,30 +13,24 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import { useProjectCreateStore } from "@/stores/useProjectCreateStore";
+import { validateProjectForm } from "@/services/validation/create-project";
+import { createProject } from "@/services/api/create-project";
+import { toast } from "@/hooks/use-toast";
 
 export default function AddProject() {
-    const { setName, setDescription, setOpenModal, name, description, loading, setLoading, errors, setErrors } = useProjectCreateStore();
+    const { setName, setDescription, openModal, setOpenModal, name, description, loading, errors } = useProjectCreateStore();
 
-
-    const validateForm = () => {
-        const newErrors = { name: "" };
-
-        if (!name.trim()) {
-            newErrors.name = "Project name is required.";
-        }
-
-        setErrors(newErrors);
-
-        return !newErrors.name; // Return true if no errors
-    };
-
-    const handleSubmit = () => {
-        if (validateForm()) {
-            setLoading(true);
-            // Add form submission logic here (e.g., API call)
-            console.log("Form Submitted:", { name, description });
-            setOpenModal(false);
-            setLoading(false);
+    const handleSubmit = async () => {
+        if (validateProjectForm()) {
+            try {
+                await createProject();
+            } catch {
+                toast({
+                    variant: "destructive",
+                    title: "Error",
+                    description: "Something went wrong. Please try again later."
+                })
+            }
         }
     };
 
@@ -50,7 +44,11 @@ export default function AddProject() {
                 Get started by creating a new project.
             </Typography>
 
-            <Dialog>
+            <Dialog open={openModal} onOpenChange={(bool) => {
+                setOpenModal(bool);
+                setName("");
+                setDescription("");
+            }}>
                 <DialogTrigger asChild>
                     <div className="mt-6">
                         <Button onClick={() => setOpenModal(true)}>
