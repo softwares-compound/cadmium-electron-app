@@ -16,7 +16,7 @@ import {
     SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { Badge } from "@/components/ui/badge"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useAuthStore } from "@/stores/useAuthStore"
 
 export function NavMain({
@@ -36,6 +36,7 @@ export function NavMain({
 }) {
     const navigate = useNavigate();
     const { organization } = useAuthStore();
+    const { project_id } = useParams();
     return (
         <SidebarGroup>
             <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -43,7 +44,7 @@ export function NavMain({
                 {items.map((item) => (
                     <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
                         <SidebarMenuItem>
-                            <SidebarMenuButton asChild tooltip={item.title} onClick={() => navigate(`/${organization.toLowerCase()}/projects/673d6733caa30090be5b410d/${item.url}/${item.items?.length ? item.items[0].url : ""}`)}>
+                            <SidebarMenuButton asChild tooltip={item.title} onClick={() => navigate(`/${organization.toLowerCase()}/projects/${project_id}/${item.url}/${item.items?.length ? item.items[0].url : ""}`)}>
                                 <div>
                                     <item.icon />
                                     <span>{item.title}</span>
@@ -64,7 +65,7 @@ export function NavMain({
                                                     <SidebarMenuSubButton asChild>
                                                         <div
                                                             className="ml-1 flex justify-between items-center gap-2"
-                                                            onClick={() => navigate(`/${organization.toLowerCase()}/projects/673d6733caa30090be5b410d/${item.url}/${subItem.url}`)}
+                                                            onClick={() => navigate(`/${organization.toLowerCase()}/projects/${project_id}/${item.url}/${subItem.url}`)}
                                                         >
                                                             <span>
                                                                 <span>{subItem.title}</span>

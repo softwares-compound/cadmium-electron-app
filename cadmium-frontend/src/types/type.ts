@@ -33,6 +33,8 @@ export interface Organization {
     cd_id: string;
     cd_secret: string;
     created_at: string;
+    organization_id: string;
+    organization_name: string;
 }
 
 
@@ -46,16 +48,48 @@ export type ProjectCardData = {
     value: number | string
     variant?: "default" | "destructive" | "outline" | "secondary" | null | undefined
 }
-export type Path = string
+
 export type ProjectCardProps = {
     id: string
-    src: Path
-    alt: string
     title: string
     description: string
     data: ProjectCardData[]
     onOpen: () => void
 }
+
+export interface Project {
+    id: string;
+    name: string;
+    description: string;
+    errorCount: number;
+    codeSuggestionCount: number;
+    totalErrorResolved: number;
+    isConnectedToRemote: boolean;
+    remoteUrl: string;
+}
+
+export type ProjectList = Project[]
+
+export interface CreateProjectState {
+    name: string;
+    setName: (name: string) => void;
+    description: string;
+    setDescription: (description: string) => void;
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    openModal: boolean;
+    setOpenModal: (openModal: boolean) => void
+    errors: { name?: string; description?: string; };
+    setErrors: (errors: { name?: string; description?: string; }) => void;
+}
+
+export interface ProjectState {
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+    projectList: ProjectList;
+    setProjectList: (projects: ProjectList) => void;
+}
+
 
 export interface TerminalDrawerStoreState {
     loading: boolean;
@@ -63,17 +97,6 @@ export interface TerminalDrawerStoreState {
     openDrawer: boolean;
     setOpenDrawer: (openDrawer: boolean) => void;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -128,8 +151,14 @@ export interface LogStoreState {
     setSelectedLog: (selectedLog: LogTableEntry) => void;
     page: number;
     setPage: (page: number) => void;
+    incrementPage: () => void;
+    decrementPage: () => void;
     limit: number;
     setLimit: (limit: number) => void;
-    tableData: LogData | null;
-    setTableData: (tableData: LogData) => void;
+    tableData: LogTableEntry[];
+    setTableData: (tableData: LogTableEntry[]) => void;
+    appendTableData: (newData: LogTableEntry[]) => void;
+    resetTableData: () => void;
+    totalLogs: number | null; // Add this
+    setTotalLogs: (totalLogs: number) => void; // Add this
 }

@@ -8,12 +8,12 @@ import {
 const THead: React.FC = () => {
     return (
         <TableHeader>
-            <TableRow className=''>
+            <TableRow>
                 <TableHead className="w-[100px]">Timestamp</TableHead>
-                <TableHead>API endpoint</TableHead>
-                <TableHead>Method</TableHead>
-                <TableHead className="text-left">Error message</TableHead>
-                <TableHead className="text-right">Action</TableHead>
+                <TableHead className="text-left ">Error message</TableHead>
+                <TableHead className="w-[50px] ">Method</TableHead>
+                <TableHead className="w-[50px] ">API endpoint</TableHead>
+                <TableHead className="text-right w-[50px] ">Action</TableHead>
             </TableRow>
         </TableHeader>
     )

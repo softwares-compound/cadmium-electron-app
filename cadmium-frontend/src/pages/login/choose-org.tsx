@@ -12,7 +12,7 @@ const ChooseOrg: React.FC = () => {
     const getOrgList = async () => {
         try {
             const { data } = await LOCAL_AXIOS_INSTANCE.get('/org-list');
-            return data.clients
+            return data.clients as Organization[]
         } catch (error: Error | any) {
             console.log(error);
             toast({ title: "Server Error", description: "Could'nt fetch organization list." });
@@ -28,8 +28,10 @@ const ChooseOrg: React.FC = () => {
     const handleChooseOrg = (org: Organization) => {
         localStorage.setItem("cd_id", org.cd_id);
         localStorage.setItem("cd_secret", org.cd_secret);
+        localStorage.setItem("organizationId", org.organization_id);
+        localStorage.setItem("organizationName", org.organization_name);
         setIsLoggedIn(true);
-        setOrganization("Rosterly");
+        setOrganization(org.organization_name);
     }
 
     return (
@@ -48,7 +50,7 @@ const ChooseOrg: React.FC = () => {
                         {
                             data && data?.map((org: Organization) => (
                                 <div className="mb-2" key={org.id}>
-                                    <p className="text-xl inline no-underline hover:underline cursor-pointer" onClick={() => handleChooseOrg(org)}>Rosterly</p>
+                                    <p className="text-xl inline no-underline hover:underline cursor-pointer" onClick={() => handleChooseOrg(org)}>{org.organization_name}</p>
                                 </div>
                             ))
                         }

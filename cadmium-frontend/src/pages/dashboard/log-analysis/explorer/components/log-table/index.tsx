@@ -1,5 +1,5 @@
-import { Table } from '@/components/ui/table';
 import React from 'react'
+import { Table } from '@/components/ui/table';
 import THead from './t-head';
 import { LogTableEntry } from '@/types/type';
 import { useLogStore } from '@/stores/useLogStore';
@@ -7,22 +7,45 @@ import TBody from './t-body';
 import { SolutionSlideOver } from '../Solution-SlideOver';
 import { Typography } from '@/components/ui/typography';
 import { useParams } from "react-router-dom";
-// import { LogTableEntry } from "@/types/type";
-import { fetchLogTableData } from "@/services/fetch-log-table-data";
-import { useQuery } from "@tanstack/react-query";
-import TablePagination from './t-pagination';
+import { fetchLogTableData } from "@/services/api/fetch-log-table-data";
+import { useQuery } from '@tanstack/react-query';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 const LogTable: React.FC = () => {
-    const { openSlideOver, setOpenSlideOver, selectedLog, setSelectedLog } = useLogStore();
+    const {
+        tableData,
+        setOpenSlideOver,
+        setSelectedLog,
+        openSlideOver,
+        selectedLog,
+        incrementPage,
+        loading,
+        totalLogs,
+        limit,
+        // page
+    } = useLogStore();
+    const { project_id } = useParams();
     const cd_id = localStorage.getItem("cd_id") ?? "";
-    const cd_secret = localStorage.getItem("cd_secret") ?? "";;
-    const { project_id } = useParams<{ project_id: string }>();
-    const { isLoading, error, data: tableData } = useQuery({
+    const cd_secret = localStorage.getItem("cd_secret") ?? "";
+
+    const { isLoading, error } = useQuery({
         queryKey: ['log-table', cd_id, cd_secret, project_id],
-        queryFn: () => fetchLogTableData(cd_id, cd_secret, project_id ?? ""),
+        queryFn: () => fetchLogTableData(project_id ?? ""),
         refetchOnWindowFocus: false
     })
+
+    // useEffect(() => {
+    //     fetchLogTableData(cd_id, cd_secret, project_id ?? "");
+    // }, [cd_id, cd_secret, project_id, page]);
+
+    const fetchMoreData = () => {
+        if (!loading && tableData.length < (totalLogs || Infinity)) {
+            incrementPage();
+            fetchLogTableData(project_id ?? "");
+        }
+    };
+
     const handleRowClick = async (data: LogTableEntry) => {
         setOpenSlideOver(true);
         setSelectedLog(data);
@@ -30,10 +53,20 @@ const LogTable: React.FC = () => {
     return (
         <div>
             <Typography variant="xl" className=" px-2 py-2 ">Error logs</Typography>
-            <Table>
-                <THead />
-                <TBody tableData={tableData ?? []} onRowClick={handleRowClick} />
-            </Table>
+            {/* <div className='w-full max-h-[calc(100dvh-46dvh)] overflow-y-scroll relative scrollbar scrollbar-hide'> */}
+            <InfiniteScroll
+                dataLength={tableData.length} // Current data length
+                next={fetchMoreData} // Function to fetch the next page
+                hasMore={tableData.length >= limit} // Stop scrolling when all logs are loaded
+                loader={loading && <p className='text-center my-4'>Loading...</p>} // Loader shown during fetch
+                scrollableTarget="scrollableDiv" // Target for scrollable container
+            >
+                <Table>
+                    <THead />
+                    <TBody tableData={tableData ?? []} onRowClick={handleRowClick} />
+                </Table>
+            </InfiniteScroll>
+            {/* </div> */}
             {
                 isLoading
                     ? <p>Loading...</p>
@@ -45,9 +78,6 @@ const LogTable: React.FC = () => {
                 tableData === null &&
                 <Typography variant="sm" className="text-muted-foreground px-2 py-8 text-center">No logs found.</Typography>
             }
-            <div className="mt-4">
-                <TablePagination />
-            </div>
             <SolutionSlideOver open={openSlideOver} onOpenChange={setOpenSlideOver} errorLog={selectedLog} onMarkResolved={() => setOpenSlideOver(false)} />
         </div>
     )

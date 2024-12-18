@@ -10,6 +10,6 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
     isLoggedIn: false,
     setIsLoggedIn: (status) => set({ isLoggedIn: status }),
-    organization: "Rosterly",
+    organization: "",
     setOrganization: (org) => set({ organization: org }),
 }));

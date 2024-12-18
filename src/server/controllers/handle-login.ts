@@ -1,6 +1,8 @@
 import { initializeDB, openDB } from "../config/sqlite";
 import { CLOUD_AXIOS_INSTANCE } from "../config/axios";
 import { Request, Response, NextFunction } from "express";
+import { OrganizationModel } from "../models/organizationModel";
+import { cli } from "winston/lib/winston/config";
 
 const handleLogin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -14,23 +16,25 @@ const handleLogin = async (req: Request, res: Response, next: NextFunction): Pro
         }
 
         // Fetch data from the external API
-        const cloudResp = await CLOUD_AXIOS_INSTANCE.get("/applications", {
+        const resp1 = await CLOUD_AXIOS_INSTANCE.get("/applications", {
             headers: {
                 "Content-Type": "application/json",
                 "CD-ID": body.clientId,
                 "CD-Secret": body.clientSecret,
             },
         });
-
-        // Open the SQLite database and insert the client credentials
-        const db = openDB();
-        const insertStatement = db.prepare(
-            `INSERT INTO organization_detail (cd_id, cd_secret) VALUES (?, ?)`
-        );
-
+        const resp2 = await CLOUD_AXIOS_INSTANCE.get("/organizations", {
+            headers: {
+                "Content-Type": "application/json",
+                "CD-ID": body.clientId,
+                "CD-Secret": body.clientSecret,
+            },
+        })
+        const { id: organization_id, org_name: organization_name } = resp2.data;
         try {
-            insertStatement.run(body.clientId, body.clientSecret);
-            console.log("Client credentials successfully inserted into the database.");
+            // Open the SQLite database and insert the client credentials
+            OrganizationModel.createOrganization(body.clientId, body.clientSecret, organization_name, organization_id);
+            console.log("Client credentials successfully inserted into the database.", body.clientId, body.clientSecret);
         } catch (err: any) {
             if (err.code === "SQLITE_CONSTRAINT_UNIQUE") {
                 console.error("Duplicate entry error:", err.message);
@@ -43,10 +47,14 @@ const handleLogin = async (req: Request, res: Response, next: NextFunction): Pro
         }
 
         // Return the external API response
-        res.status(200).json(cloudResp.data);
+        res.status(200).json({
+            clientId: body.clientId,
+            clientSecret: body.clientSecret,
+            organization_name: organization_name,
+            organization_id: organization_id,
+        });
     } catch (error: any) {
         console.error("[Error] =====>>", error);
-
         // Distinguish between axios and internal errors
         if (error.response && error.response.status) {
             res.status(error.response.status).json({

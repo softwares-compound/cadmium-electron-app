@@ -3,9 +3,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginNavbar from './components/custom/navbars/login-navbar';
 import { SidebarInset, SidebarProvider } from './components/ui/sidebar';
 import { AppSidebar } from './components/custom/sidebar';
-import PublicRouteProtector from './services/public-route-protector';
-import PrivateRouteProtector from './services/private-route-protector';
+import PublicRouteProtector from './services/route-protector/public-route-protector';
+import PrivateRouteProtector from './services/route-protector/private-route-protector';
 import ProjectPageNavbar from './components/custom/navbars/projects-page-navbar';
+import Footer from './components/custom/global/footer';
 
 
 // Lazy load pages
@@ -68,6 +69,9 @@ const router = createBrowserRouter([
 							<LogAnalysis />
 						</SidebarInset>
 					</SidebarProvider>
+					<div className='fixed bottom-0 right-0 bg-sidebar-background w-full '>
+						<Footer />
+					</div>
 				</PrivateRouteProtector>
 			</Suspense>
 		),

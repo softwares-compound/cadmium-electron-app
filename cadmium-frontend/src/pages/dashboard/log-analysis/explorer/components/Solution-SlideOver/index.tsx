@@ -37,7 +37,7 @@ export function SolutionSlideOver({
 
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
-            <SheetContent className="w-full sm:w-3/4 xl:w-2/4 overflow-y-scroll">
+            <SheetContent className="w-full sm:w-3/4 xl:w-4/6 overflow-y-scroll">
                 <SheetHeader>
                     <DialogTitle className="text-lg font-semibold">Error Details</DialogTitle>
                     <SheetDescription className="">
@@ -119,6 +119,12 @@ export function SolutionSlideOver({
                                                 </code>
                                             );
                                         },
+                                        strong: ({ ...props }) => (
+                                            <strong
+                                                className="font-bold"
+                                                {...props}
+                                            />
+                                        ),
                                         h1: ({ ...props }) => (
                                             <h1
                                                 {...props}
@@ -134,6 +140,7 @@ export function SolutionSlideOver({
                                         ),
                                         p: ({ ...props }) => (
                                             <p
+                                                className="my-4"
                                                 {...props}
                                             />
                                         ),

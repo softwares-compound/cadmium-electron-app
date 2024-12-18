@@ -29,7 +29,7 @@ const LogAnalysis: React.FC = () => {
     }
 
     return (
-        <div>
+        <div className="flex flex-col mb-[5vh] w-full">
             <Header />
             {content}
         </div>

@@ -1,57 +1,49 @@
-import { ProjectCardProps } from "@/types/type";
 import ProjectCard from "./project-card";
 import AddProject from "./add-project";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/useAuthStore";
-
-
-
-const projects: ProjectCardProps[] = [
-    {
-        id: "673d6733caa30090be5b410d",
-        src: "/rosterly.png",
-        alt: "project logo",
-        title: "Rosterly.io",
-        description: "AI-Powered Workforce & Financial Management for IT and Professional Firms",
-        data: [
-            {
-                name: "New Error",
-                value: "03",
-                variant: "destructive",
-            },
-            {
-                name: "Code Suggestion",
-                value: "07",
-                variant: "default",
-            },
-            {
-                name: "Total Error Resolved",
-                value: "281",
-                variant: "outline",
-            },
-        ],
-        onOpen: () => { },
-    },
-]
+import { fetchProjectList } from "@/services/api/fetch-projects--list";
+import { useProjectListStore } from "@/stores/useProjectListStore";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Projects() {
     const { organization } = useAuthStore();
+    const { projectList } = useProjectListStore();
     const navigate = useNavigate();
+    useQuery({
+        queryKey: ['projects',],
+        queryFn: () => fetchProjectList(),
+        refetchOnWindowFocus: false
+    })
+
     return (
         <div className="flex flex-col min-h-[calc(100vh-7vh)] w-full items-center justify-center px-4 ">
             <div className="flex flex-1 flex-col justify-center gap-4 p-4 pt-0">
                 <div className="grid auto-rows-min gap-4 xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {projects.map((project, index) => (
+                    {projectList.map((project, index) => (
                         <ProjectCard
                             id={project.id}
                             key={index}
-                            title={project.title}
+                            title={project.name}
                             description={project.description}
-                            src={project.src}
-                            alt={project.alt}
-                            data={project.data}
+                            data={[
+                                {
+                                    name: "New Error",
+                                    value: project.errorCount,
+                                    variant: "destructive",
+                                },
+                                {
+                                    name: "Code Suggestion",
+                                    value: project.codeSuggestionCount,
+                                    variant: "default",
+                                },
+                                {
+                                    name: "Total Error Resolved",
+                                    value: project.totalErrorResolved,
+                                    variant: "outline",
+                                }
+                            ]}
                             onOpen={() => {
-                                console.log(project.id);
                                 navigate(`/${organization.toLowerCase()}/projects/${project.id}/log-analysis/explorer`)
                             }}
                         />

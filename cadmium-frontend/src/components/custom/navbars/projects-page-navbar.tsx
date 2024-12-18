@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Image, LogOut } from "lucide-react"
 import { ThemeToggle } from '../theme/theme-toggle'
-import { handleLogout } from '@/services/handle-logout'
+import { handleLogout } from '@/services/api/handle-logout'
 import { useNavigate } from 'react-router-dom'
 
 const ProjectPageNavbar: React.FC = () => {
