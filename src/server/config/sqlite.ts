@@ -22,6 +22,9 @@ export function openDB() {
 export function initializeDB() {
     try {
         const db = openDB();
+        console.log('******************************************************');
+        console.log('**************Initializing database... ***************');
+        console.log('******************************************************');
         db.exec(`
             CREATE TABLE IF NOT EXISTS organization_detail (
               id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,6 +46,8 @@ export function initializeDB() {
               FOREIGN KEY (organization_id) REFERENCES organization_detail (id)
             );
         `);
+
+        // applyMigrations();
         console.log('Database initialized.');
     } catch (error) {
         console.error('Error initializing database:', error);

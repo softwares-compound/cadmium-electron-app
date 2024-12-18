@@ -16,7 +16,7 @@ router.post('/login', handleLogin);
 router.get('/org-list', handleGetOrgList);
 router.get('/project/:project_id', handleCheckProjectRemoteLink);
 router.post('/project', handleCreateProject);
-router.post("/validation", validateCredentials);
+router.post('/validation', validateCredentials);
 
 
 export default router;

@@ -30,10 +30,10 @@ const handleLogin = async (req: Request, res: Response, next: NextFunction): Pro
                 "CD-Secret": body.clientSecret,
             },
         })
-        const { id: organization_id, org_name } = resp2.data;
+        const { id: organization_id, org_name: organization_name } = resp2.data;
         try {
             // Open the SQLite database and insert the client credentials
-            OrganizationModel.createOrganization(body.clientId, body.clientSecret, org_name, organization_id);
+            OrganizationModel.createOrganization(body.clientId, body.clientSecret, organization_name, organization_id);
             console.log("Client credentials successfully inserted into the database.", body.clientId, body.clientSecret);
         } catch (err: any) {
             if (err.code === "SQLITE_CONSTRAINT_UNIQUE") {
@@ -50,7 +50,7 @@ const handleLogin = async (req: Request, res: Response, next: NextFunction): Pro
         res.status(200).json({
             clientId: body.clientId,
             clientSecret: body.clientSecret,
-            organization_name: org_name,
+            organization_name: organization_name,
             organization_id: organization_id,
         });
     } catch (error: any) {
