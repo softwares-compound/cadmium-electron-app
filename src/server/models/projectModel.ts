@@ -2,13 +2,13 @@ import { Project } from "../../types/types";
 import { openDB } from "../config/sqlite";
 
 export const ProjectModel = {
-    createProject: (name: string, description: string, organization_id: number) => {
+    createProject: (name: string, description: string, project_id: string, organization_id: string) => {
         const db = openDB();
         const stmt = db.prepare(`
-            INSERT INTO projects (name, description, organization_id)
-            VALUES (?, ?, ?)
+            INSERT INTO projects (name, description, project_id, organization_id)
+            VALUES (?, ?, ?, ?)
         `);
-        return stmt.run(name, description, organization_id, 0, "") as unknown as Project;
+        return stmt.run(name, description, project_id, organization_id) as unknown as Project;
     },
 
     getProjectById: (id: number): any => {

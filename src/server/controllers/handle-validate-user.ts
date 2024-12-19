@@ -18,7 +18,7 @@ const validateCredentials = async (req: Request, res: Response): Promise<void> =
         );
 
         const result = queryStatement.get(cd_id, cd_secret);
-
+        console.log("Result----??>>>>>>:", result);
         if (result) {
             // Credentials are valid
             res.status(200).json({ isValid: true, return: result });

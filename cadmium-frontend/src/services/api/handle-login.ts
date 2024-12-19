@@ -24,13 +24,11 @@ export const handleLogin = async (navigate: NavigateFunction): Promise<void> => 
 
     const { clientId, clientSecret } = formData;
 
-    setLoading(true); // Start loading
     try {
+        setLoading(true); // Start loading
         const resp = await LOCAL_AXIOS_INSTANCE.post("/login", { clientId, clientSecret });
         if (resp.status === 200) {
-            // Store credentials
-            console.log("start **************************************");
-            console.log(resp.data);
+            // Store credentials in local storage
             localStorage.setItem("cd_id", clientId);
             localStorage.setItem("cd_secret", clientSecret);
             localStorage.setItem("organization_id", resp.data.organization_id);
@@ -38,7 +36,6 @@ export const handleLogin = async (navigate: NavigateFunction): Promise<void> => 
             setOrganization(resp.data.organization_name);
             navigate(`/${resp.data.organization_name}/projects`, { replace: true }); // Use the passed navigate function
             setIsLoggedIn(true);
-            console.log("end **************************************");
         }
     } catch (error: any) {
         console.error("[Error] ==>>", error);

@@ -33,7 +33,7 @@ const handleLogin = async (req: Request, res: Response, next: NextFunction): Pro
         const { id: organization_id, org_name: organization_name } = resp2.data;
         try {
             // Open the SQLite database and insert the client credentials
-            OrganizationModel.createOrganization(body.clientId, body.clientSecret, organization_name, organization_id);
+            OrganizationModel.createOrganization(organization_id, body.clientId, body.clientSecret, organization_name);
             console.log("Client credentials successfully inserted into the database.", body.clientId, body.clientSecret);
         } catch (err: any) {
             if (err.code === "SQLITE_CONSTRAINT_UNIQUE") {

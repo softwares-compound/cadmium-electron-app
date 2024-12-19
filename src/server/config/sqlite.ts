@@ -27,10 +27,9 @@ export function initializeDB() {
         console.log('******************************************************');
         db.exec(`
             CREATE TABLE IF NOT EXISTS organization_detail (
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              id TEXT PRIMARY KEY UNIQUE,
               cd_id TEXT NOT NULL UNIQUE,
               cd_secret TEXT NOT NULL UNIQUE,
-              organization_id TEXT NOT NULL UNIQUE,
               organization_name TEXT NOT NULL,
               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
@@ -39,6 +38,7 @@ export function initializeDB() {
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               name TEXT NOT NULL,
               description TEXT,
+              project_id TEXT NOT NULL UNIQUE,
               organization_id INTEGER NOT NULL,
               is_connected_to_remote BOOLEAN DEFAULT 0,
               remote_url TEXT,

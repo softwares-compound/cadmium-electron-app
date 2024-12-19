@@ -7,14 +7,16 @@ import { useProjectListStore } from "@/stores/useProjectListStore";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Projects() {
-    const { organization } = useAuthStore();
+    const { organization, isLoggedIn } = useAuthStore();
     const { projectList } = useProjectListStore();
     const navigate = useNavigate();
+
     useQuery({
         queryKey: [organization, 'projects'],
-        queryFn: () => fetchProjectList(),
+        queryFn: () => isLoggedIn ? fetchProjectList() : [],
         refetchOnWindowFocus: false
     })
+    console.log(projectList)
 
     return (
         <div className="flex flex-col min-h-[calc(100vh-7vh)] w-full items-center justify-center px-4 ">

@@ -2,13 +2,13 @@ import { Organization } from "../../types/types";
 import { openDB } from "../config/sqlite";
 
 export const OrganizationModel = {
-    createOrganization: (cd_id: string, cd_secret: string, organization_name: string, organization_id: string) => {
+    createOrganization: (organization_id: string, cd_id: string, cd_secret: string, organization_name: string) => {
         const db = openDB();
         const stmt = db.prepare(`
-            INSERT INTO organization_detail (cd_id, cd_secret, organization_name, organization_id)
+            INSERT INTO organization_detail (id, cd_id, cd_secret, organization_name)
             VALUES (?, ?, ?, ?)
         `);
-        return stmt.run(cd_id, cd_secret, organization_name, organization_id);
+        return stmt.run(organization_id, cd_id, cd_secret, organization_name);
     },
 
     getOrganizationById: (id: string) => {

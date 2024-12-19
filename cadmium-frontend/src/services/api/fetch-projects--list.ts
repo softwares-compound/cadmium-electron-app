@@ -22,7 +22,7 @@ export const fetchProjectList = async () => {
         const projectList: ProjectList = projects.map((project: any) => ({
             id: project._id.$oid,
             name: project.application_name,
-            description: project.description ?? "AI-Powered Workforce & Financial Management for IT and Professional Firms",
+            description: project.description,
             errorCount: project.error_count ?? 0,
             codeSuggestionCount: project.code_suggestion_count ?? 0,
             totalErrorResolved: project.total_error_resolved ?? 0,

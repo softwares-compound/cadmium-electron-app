@@ -26,7 +26,8 @@ export interface Project {
     id: string;
     name: string;
     description: string;
-    organizationId: string;
-    isConnectedToRemote: boolean;
-    remoteUrl: string;
+    project_id: string;
+    organization_id: string;
+    is_connected_to_remote: boolean;
+    remote_url: string;
 }
