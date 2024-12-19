@@ -8,7 +8,7 @@ export const ProjectModel = {
             INSERT INTO projects (name, description, project_id, organization_id)
             VALUES (?, ?, ?, ?)
         `);
-        return stmt.run(name, description, project_id, organization_id) as unknown as Project;
+        return stmt.run(name, description, project_id, organization_id);
     },
 
     getProjectById: (id: number): any => {

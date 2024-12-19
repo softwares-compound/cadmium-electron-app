@@ -46,7 +46,7 @@ export const createProject = async (): Promise<object> => {
             project_name: name,
             project_description: description,
         };
-        const localResp = await LOCAL_AXIOS_INSTANCE.post(`/project`, {
+        await LOCAL_AXIOS_INSTANCE.post(`/project`, {
             ...body,
         }, {
             headers: {
@@ -55,7 +55,16 @@ export const createProject = async (): Promise<object> => {
                 "CD-Secret": cd_secret
             }
         })
-        setProjectList([...projectList, localResp.data]);
+        setProjectList([...projectList, {
+            id: project_id,
+            name: name,
+            description: description,
+            errorCount: 0,
+            codeSuggestionCount: 0,
+            totalErrorResolved: 0,
+            isConnectedToRemote: false,
+            remoteUrl: ""
+        }]);
         setOpenModal(false);
         toast({
             title: "Success",

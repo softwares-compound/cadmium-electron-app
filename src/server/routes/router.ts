@@ -5,6 +5,7 @@ import handleGetOrgList from '../controllers/handle-get-org-list';
 import validateCredentials from '../controllers/handle-validate-user';
 import handleCreateProject from '../controllers/handle-create-project';
 import handleCheckProjectRemoteLink from '../controllers/handle-check-project-remote-link';
+import { ProjectModel } from '../models/projectModel';
 
 const router = Router();
 // TEST API
@@ -18,5 +19,6 @@ router.get('/project/:project_id', handleCheckProjectRemoteLink);
 router.post('/project', handleCreateProject);
 router.post('/validation', validateCredentials);
 
+console.log("All Projects===>> ", ProjectModel.getAllProjects());
 
 export default router;
