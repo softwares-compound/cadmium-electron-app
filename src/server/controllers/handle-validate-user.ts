@@ -21,7 +21,7 @@ const validateCredentials = async (req: Request, res: Response): Promise<void> =
 
         if (result) {
             // Credentials are valid
-            res.status(200).json({ isValid: true });
+            res.status(200).json({ isValid: true, return: result });
         } else {
             // Credentials are invalid
             res.status(401).json({ isValid: false });

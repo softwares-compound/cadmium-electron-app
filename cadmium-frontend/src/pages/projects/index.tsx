@@ -11,7 +11,7 @@ export default function Projects() {
     const { projectList } = useProjectListStore();
     const navigate = useNavigate();
     useQuery({
-        queryKey: ['projects',],
+        queryKey: [organization, 'projects'],
         queryFn: () => fetchProjectList(),
         refetchOnWindowFocus: false
     })
@@ -44,7 +44,7 @@ export default function Projects() {
                                 }
                             ]}
                             onOpen={() => {
-                                navigate(`/${organization.toLowerCase()}/projects/${project.id}/log-analysis/explorer`)
+                                navigate(`/${organization}/projects/${project.id}/log-analysis/explorer`)
                             }}
                         />
                     ))}

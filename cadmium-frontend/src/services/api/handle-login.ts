@@ -29,13 +29,16 @@ export const handleLogin = async (navigate: NavigateFunction): Promise<void> => 
         const resp = await LOCAL_AXIOS_INSTANCE.post("/login", { clientId, clientSecret });
         if (resp.status === 200) {
             // Store credentials
-            localStorage.setItem("clientId", clientId);
-            localStorage.setItem("clientSecret", clientSecret);
-            localStorage.setItem("organizationId", resp.data.organization_id);
-            localStorage.setItem("organizationName", resp.data.organization_name);
+            console.log("start **************************************");
+            console.log(resp.data);
+            localStorage.setItem("cd_id", clientId);
+            localStorage.setItem("cd_secret", clientSecret);
+            localStorage.setItem("organization_id", resp.data.organization_id);
+            localStorage.setItem("organization_name", resp.data.organization_name);
+            setOrganization(resp.data.organization_name);
+            navigate(`/${resp.data.organization_name}/projects`, { replace: true }); // Use the passed navigate function
             setIsLoggedIn(true);
-            setOrganization("Rosterly");
-            navigate("/rosterly/projects", { replace: true }); // Use the passed navigate function
+            console.log("end **************************************");
         }
     } catch (error: any) {
         console.error("[Error] ==>>", error);

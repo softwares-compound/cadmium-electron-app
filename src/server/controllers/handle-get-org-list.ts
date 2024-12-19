@@ -1,15 +1,14 @@
 // src/server/controllers/get-clients.ts
 
 import { Organization } from "../../types/types";
-import { openDB } from "../config/sqlite";
 import { Request, Response, NextFunction } from "express";
 import { OrganizationModel } from "../models/organizationModel";
+
 
 
 // Controller to handle fetching clients
 const handleGetOrgList = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        console.log("Inside handleGetOrgList");
         const clients: Organization[] = OrganizationModel.getAllOrganizations();
         console.log("Organization List===>> ", clients);
         // Respond with the list of clients

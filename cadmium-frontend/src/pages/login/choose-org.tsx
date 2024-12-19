@@ -46,15 +46,17 @@ const ChooseOrg: React.FC = () => {
                     ?
                     <Loader size="6" color="accent" speed="slow" />
                     :
-                    <CardContent className="">
-                        {
-                            data && data?.map((org: Organization) => (
-                                <div className="mb-2" key={org.id}>
-                                    <p className="text-xl inline no-underline hover:underline cursor-pointer" onClick={() => handleChooseOrg(org)}>{org.organization_name}</p>
-                                </div>
-                            ))
-                        }
-                    </CardContent>
+                    data?.length === 0 ? <p className="text-center my-4">No saved organization found.</p>
+                        :
+                        <CardContent className="">
+                            {
+                                data && data?.map((org: Organization) => (
+                                    <div className="mb-2" key={org.id}>
+                                        <p className="text-xl inline no-underline hover:underline cursor-pointer" onClick={() => handleChooseOrg(org)}>{org.organization_name}</p>
+                                    </div>
+                                ))
+                            }
+                        </CardContent>
             }
         </Card>
     )

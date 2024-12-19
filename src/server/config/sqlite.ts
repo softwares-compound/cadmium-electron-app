@@ -2,7 +2,7 @@ import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs';
 
-const DB_PATH = path.resolve(__dirname, '../../../db/cadmium.db');
+const DB_PATH = path.resolve(__dirname, '../src/db/cadmium.db');
 
 // Ensure the database directory exists
 function ensureDBDirectoryExists() {
