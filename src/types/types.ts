@@ -31,3 +31,5 @@ export interface Project {
     is_connected_to_remote: boolean;
     remote_url: string;
 }
+
+export type ProjectList = Project[]

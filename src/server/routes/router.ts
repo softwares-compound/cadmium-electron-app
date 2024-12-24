@@ -16,7 +16,7 @@ router.post('/echo-request', (req, res) => {
 
 router.post('/login', handleLogin);
 router.get('/org-list', handleGetOrgList);
-router.get('/project/:project_id', validateHeadersMiddleware, handleCheckProjectRemoteLink);
+router.post('/project/check_remote_link', validateHeadersMiddleware, handleCheckProjectRemoteLink);
 router.post('/project', validateHeadersMiddleware, handleCreateProject);
 router.post('/validation', validateCredentials);
 
