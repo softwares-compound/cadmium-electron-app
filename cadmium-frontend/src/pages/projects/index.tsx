@@ -7,14 +7,16 @@ import { useProjectListStore } from "@/stores/useProjectListStore";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Projects() {
-    const { organization } = useAuthStore();
+    const { organization, isLoggedIn } = useAuthStore();
     const { projectList } = useProjectListStore();
     const navigate = useNavigate();
+
     useQuery({
-        queryKey: ['projects',],
-        queryFn: () => fetchProjectList(),
+        queryKey: [organization, 'projects'],
+        queryFn: () => isLoggedIn ? fetchProjectList() : [],
         refetchOnWindowFocus: false
     })
+    console.log(projectList)
 
     return (
         <div className="flex flex-col min-h-[calc(100vh-7vh)] w-full items-center justify-center px-4 ">
@@ -43,9 +45,12 @@ export default function Projects() {
                                     variant: "outline",
                                 }
                             ]}
-                            onOpen={() => {
-                                navigate(`/${organization.toLowerCase()}/projects/${project.id}/log-analysis/explorer`)
+                            isLinkedToRemote={project.isConnectedToRemote}
+                            remoteUrl={project.remoteUrl}
+                            onOpenProject={() => {
+                                navigate(`/${organization}/projects/${project.id}/log-analysis/explorer`)
                             }}
+                            onOpenTerminal={() => { }}
                         />
                     ))}
                 </div>

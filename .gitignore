@@ -243,3 +243,6 @@ coverage/
 *.tgz
 *.zip
 *.tar.gz
+
+# file for AI
+target-codes

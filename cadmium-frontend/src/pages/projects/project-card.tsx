@@ -11,6 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { ProjectCardProps } from '@/types/type'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Github } from 'lucide-react'
 
 const ProjectCard: React.FC<ProjectCardProps> = (props: ProjectCardProps) => {
     return (
@@ -39,9 +40,18 @@ const ProjectCard: React.FC<ProjectCardProps> = (props: ProjectCardProps) => {
                 </dl>
             </CardContent>
             <CardFooter className="flex justify-end">
-                <Button onClick={props.onOpen}>
-                    Open
-                </Button>
+                {
+                    props.isLinkedToRemote ? (
+
+                        <Button onClick={props.onOpenProject}>
+                            Open
+                        </Button>
+                    ) : (
+                        <Button onClick={props.onOpenProject}>
+                            <Github className=" h-4 w-4" />Link to remote
+                        </Button>
+                    )
+                }
             </CardFooter>
         </Card>
     )

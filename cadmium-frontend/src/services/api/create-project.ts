@@ -4,7 +4,9 @@
  */
 
 import { CLOUD_AXIOS_INSTANCE, LOCAL_AXIOS_INSTANCE } from "@/axios/axios";
+import { toast } from "@/hooks/use-toast";
 import { useProjectCreateStore } from "@/stores/useProjectCreateStore";
+import { useProjectListStore } from "@/stores/useProjectListStore";
 
 /**
  * Sends a request to create a new project.
@@ -16,41 +18,58 @@ import { useProjectCreateStore } from "@/stores/useProjectCreateStore";
  */
 export const createProject = async (): Promise<object> => {
     const { name, description, setOpenModal, setLoading } = useProjectCreateStore.getState();
+    const { projectList, setProjectList } = useProjectListStore.getState();
     const cd_id = localStorage.getItem("cd_id") ?? "";
     const cd_secret = localStorage.getItem("cd_secret") ?? "";
+    const organization_id = localStorage.getItem("organization_id") ?? "";
     try {
         setLoading(true);
         const response = await CLOUD_AXIOS_INSTANCE.post("/applications", {
-            body: JSON.stringify({ application_name: name, organization_id: cd_id, application_description: description }),
+            application_name: name,
+            description: description,
+        }, {
             headers: {
                 "Content-Type": "application/json",
                 "CD-ID": cd_id,
                 "CD-Secret": cd_secret
-            },
+            }
         });
 
         if (response.status != 200) {
             throw new Error("Failed to create project");
         }
 
-        const application_id = response.data.application_id;
+        const project_id = response.data.application_id;
         const body = {
-            project_id: application_id,
-            organization_id: cd_id,
-            application_name: name,
-            application_description: description,
+            project_id: project_id,
+            organization_id: organization_id,
+            project_name: name,
+            project_description: description,
         };
-        const localResp = await LOCAL_AXIOS_INSTANCE.post(`/project`, {
-            body: JSON.stringify(body),
+        await LOCAL_AXIOS_INSTANCE.post(`/project`, {
+            ...body,
+        }, {
             headers: {
                 "Content-Type": "application/json",
                 "CD-ID": cd_id,
                 "CD-Secret": cd_secret
-            },
+            }
         })
-        console.log("localResp -=-=-=-=-", localResp);
+        setProjectList([...projectList, {
+            id: project_id,
+            name: name,
+            description: description,
+            errorCount: 0,
+            codeSuggestionCount: 0,
+            totalErrorResolved: 0,
+            isConnectedToRemote: false,
+            remoteUrl: ""
+        }]);
         setOpenModal(false);
-        console.log("Project created successfully:", application_id);
+        toast({
+            title: "Success",
+            description: "Project created successfully. You can now connect your project to your remote repository.",
+        })
         return response.data;
     } catch (error) {
         console.error("Error creating project:", error);

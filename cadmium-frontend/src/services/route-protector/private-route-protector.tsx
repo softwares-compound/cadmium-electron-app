@@ -63,6 +63,22 @@ const PrivateRouteProtector: React.FC<Props> = ({ children }) => {
         }
     }, []);
 
+    // useEffect(() => {
+    //     const cd_id = localStorage.getItem("cd_id");
+    //     const cd_secret = localStorage.getItem("cd_secret");
+    //     if (cd_id && cd_secret) {
+    //         CLOUD_AXIOS_INSTANCE.delete("/applications/6763e460e935a4127b381ebd", {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "CD-ID": cd_id,
+    //                 "CD-Secret": cd_secret
+    //             }
+    //         })
+    //     } else {
+    //         navigate("/login", { state: { from: location }, replace: true });
+    //         localStorage.clear();
+    //     }
+    // }, []);
 
     if (loading) {
         return <div className=""><p className="text-center">Loading...</p></div>;

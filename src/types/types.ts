@@ -12,7 +12,7 @@ export interface FromMainPayload {
 
 // ** ORGANIZATION TYPE **
 export interface Organization {
-    id: number;
+    id: string;
     cd_id: string;
     cd_secret: string;
     created_at: string;
@@ -26,7 +26,10 @@ export interface Project {
     id: string;
     name: string;
     description: string;
-    organizationId: string;
-    isConnectedToRemote: boolean;
-    remoteUrl: string;
+    project_id: string;
+    organization_id: string;
+    is_connected_to_remote: boolean;
+    remote_url: string;
 }
+
+export type ProjectList = Project[]
