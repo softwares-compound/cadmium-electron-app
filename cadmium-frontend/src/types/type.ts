@@ -54,7 +54,10 @@ export type ProjectCardProps = {
     title: string
     description: string
     data: ProjectCardData[]
-    onOpen: () => void
+    isLinkedToRemote: boolean
+    remoteUrl: string
+    onOpenProject: () => void
+    onOpenTerminal: () => void
 }
 
 export interface Project {

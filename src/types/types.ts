@@ -12,7 +12,7 @@ export interface FromMainPayload {
 
 // ** ORGANIZATION TYPE **
 export interface Organization {
-    id: number;
+    id: string;
     cd_id: string;
     cd_secret: string;
     created_at: string;

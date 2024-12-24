@@ -45,9 +45,12 @@ export default function Projects() {
                                     variant: "outline",
                                 }
                             ]}
-                            onOpen={() => {
+                            isLinkedToRemote={project.isConnectedToRemote}
+                            remoteUrl={project.remoteUrl}
+                            onOpenProject={() => {
                                 navigate(`/${organization}/projects/${project.id}/log-analysis/explorer`)
                             }}
+                            onOpenTerminal={() => { }}
                         />
                     ))}
                 </div>

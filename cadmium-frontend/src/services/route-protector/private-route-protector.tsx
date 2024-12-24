@@ -67,7 +67,7 @@ const PrivateRouteProtector: React.FC<Props> = ({ children }) => {
     //     const cd_id = localStorage.getItem("cd_id");
     //     const cd_secret = localStorage.getItem("cd_secret");
     //     if (cd_id && cd_secret) {
-    //         const resp = CLOUD_AXIOS_INSTANCE.delete("/applications/6763d6ace935a4127b381eb3", {
+    //         CLOUD_AXIOS_INSTANCE.delete("/applications/6763e460e935a4127b381ebd", {
     //             headers: {
     //                 "Content-Type": "application/json",
     //                 "CD-ID": cd_id,
