@@ -33,6 +33,7 @@ export const fetchLogTableData = async (application_id: string): Promise<LogTabl
             createdAt
             updatedAt
             ragInference
+            traceback
         }
     }
   `;
@@ -55,6 +56,8 @@ export const fetchLogTableData = async (application_id: string): Promise<LogTabl
             return null;
         }
 
+
+        console.log("traceback =-==-=-=-=-=-===>>", response.data.data.logs[0].traceback);
         // Parse ragInference for each log entry
         const logs: LogTableEntry[] = response.data.data.logs.map((log: any) => ({
             ...log,

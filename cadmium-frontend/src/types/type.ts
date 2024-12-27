@@ -139,6 +139,7 @@ export interface LogTableEntry {
     createdAt: string; // ISO 8601 format
     updatedAt: string; // ISO 8601 format
     ragInference: { rag_response: RagResponse | null }; // Parsed JSON or null if parsing fails
+    traceback: string;
 }
 
 // Example: Array of log entries

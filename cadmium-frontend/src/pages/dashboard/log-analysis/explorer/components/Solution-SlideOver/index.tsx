@@ -72,16 +72,28 @@ export function SolutionSlideOver({
                     </div>
                     <div>
                         <Typography variant="small" className="font-semibold">
-                            Error Message
+                            Error
                         </Typography>
                         <Typography variant="sm" className="text-muted-foreground text-tiny">
                             {errorLog.error}
                         </Typography>
                     </div>
+                    <div className="text-xs" >
+                        <Typography variant="small" className="font-semibold">
+                            Stack Trace
+                        </Typography>
+                        <pre>
+                            <code>
+                                <CodeBlock codeString={errorLog.traceback} />
+                            </code>
+                        </pre>
+                    </div>
+
+                    <DialogTitle className="text-lg font-semibold">Possible solution</DialogTitle>
                     {errorLog.ragInference ? (
                         <div>
                             <Typography variant="small" className="font-semibold">
-                                Possible Resolution Steps
+                                Steps to resolve
                             </Typography>
                             <div className="text-tiny">
                                 <ReactMarkdown
@@ -193,9 +205,6 @@ export function SolutionSlideOver({
                         </div>
                     ) : (
                         <div>
-                            <Typography variant="small" className="font-semibold">
-                                Possible Resolution Steps
-                            </Typography>
                             <Typography
                                 variant="sm"
                                 className="text-muted-foreground text-center my-8"
