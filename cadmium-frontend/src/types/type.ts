@@ -29,11 +29,10 @@ export interface LoginState {
 // ****************************************************************************** //
 
 export interface Organization {
-    id: number;
+    id: string;
     cd_id: string;
     cd_secret: string;
     created_at: string;
-    organization_id: string;
     organization_name: string;
 }
 

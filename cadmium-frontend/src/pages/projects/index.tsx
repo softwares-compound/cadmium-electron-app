@@ -16,7 +16,7 @@ export default function Projects() {
         queryFn: () => isLoggedIn ? fetchProjectList() : [],
         refetchOnWindowFocus: false
     })
-    console.log(projectList)
+
 
     return (
         <div className="flex flex-col min-h-[calc(100vh-7vh)] w-full items-center justify-center px-4 ">

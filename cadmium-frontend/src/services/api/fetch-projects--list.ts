@@ -35,8 +35,8 @@ export const fetchProjectList = async () => {
                 "CD-Secret": cd_secret
             }
         })
-        console.log(projectListWithRemoteUrl.data)
-        setProjectList(projectList);
+        // console.log(projectListWithRemoteUrl.data.list)
+        setProjectList(projectListWithRemoteUrl.data.list);
         return projectList
     } catch (error) {
         console.error('Error fetching projects:', error);
