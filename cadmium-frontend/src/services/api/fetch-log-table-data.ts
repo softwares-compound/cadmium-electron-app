@@ -13,6 +13,7 @@ export const fetchLogTableData = async (application_id: string): Promise<LogTabl
     const { setLoading, limit, page, appendTableData } = useLogStore.getState(); // Zustand state for log
     const cd_id = localStorage.getItem("cd_id") ?? "";
     const cd_secret = localStorage.getItem("cd_secret") ?? "";
+    console.log("application_id ===>>", application_id);
     const headers = {
         'Content-Type': 'application/json',
         'CD-ID': cd_id,
@@ -20,7 +21,7 @@ export const fetchLogTableData = async (application_id: string): Promise<LogTabl
         'Application-ID': application_id,
     };
 
-    const query = `
+    const query = ` 
     query GetLogs($page: Int, $limit: Int) {
         logs(page: $page, limit: $limit) {
             id
@@ -48,7 +49,7 @@ export const fetchLogTableData = async (application_id: string): Promise<LogTabl
             { query, variables },
             { headers }
         );
-
+        console.log("response.data.data.logs =-==-=-=-=-=-===>>", response.data.data.logs);
         if (response.data.errors) {
             console.error('Error fetching logs:', response.data.errors);
             return null;

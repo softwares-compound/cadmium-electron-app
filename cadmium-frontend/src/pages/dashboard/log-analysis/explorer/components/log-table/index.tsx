@@ -23,6 +23,7 @@ const LogTable: React.FC = () => {
         loading,
         totalLogs,
         limit,
+        resetTableData
         // page
     } = useLogStore();
     const { project_id } = useParams();
@@ -31,7 +32,10 @@ const LogTable: React.FC = () => {
 
     const { isLoading, error } = useQuery({
         queryKey: ['log-table', cd_id, cd_secret, project_id],
-        queryFn: () => fetchLogTableData(project_id ?? ""),
+        queryFn: () => {
+            resetTableData();
+            return fetchLogTableData(project_id ?? "")
+        },
         refetchOnWindowFocus: false
     })
 
@@ -75,7 +79,7 @@ const LogTable: React.FC = () => {
                         : null
             }
             {
-                tableData === null &&
+                tableData === null || tableData.length === 0 &&
                 <Typography variant="sm" className="text-muted-foreground px-2 py-8 text-center">No logs found.</Typography>
             }
             <SolutionSlideOver open={openSlideOver} onOpenChange={setOpenSlideOver} errorLog={selectedLog} onMarkResolved={() => setOpenSlideOver(false)} />
