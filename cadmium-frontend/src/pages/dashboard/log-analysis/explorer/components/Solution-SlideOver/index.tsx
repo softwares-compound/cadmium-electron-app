@@ -7,6 +7,13 @@ import {
     SheetFooter,
     SheetHeader,
 } from "@/components/ui/sheet";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
+
 import { Typography } from "@/components/ui/typography";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import CodeBlock from "./code-block";
@@ -79,14 +86,22 @@ export function SolutionSlideOver({
                         </Typography>
                     </div>
                     <div className="text-xs" >
-                        <Typography variant="small" className="font-semibold">
-                            Stack Trace
-                        </Typography>
-                        <pre>
-                            <code>
-                                <CodeBlock codeString={errorLog.traceback} />
-                            </code>
-                        </pre>
+                        <Accordion type="single" collapsible className="">
+                            <AccordionItem value="item-1">
+                                <AccordionTrigger className="text-xs border-0 ring-0 hover:ring-0 hover:border-0 ">
+                                    <Typography variant="small" className="font-semibold">
+                                        Stack Trace
+                                    </Typography>
+                                </AccordionTrigger>
+                                <AccordionContent >
+                                    <pre>
+                                        <code>
+                                            <CodeBlock codeString={errorLog.traceback} />
+                                        </code>
+                                    </pre>
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
                     </div>
 
                     <DialogTitle className="text-lg font-semibold">Possible solution</DialogTitle>
