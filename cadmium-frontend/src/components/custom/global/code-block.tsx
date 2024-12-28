@@ -1,10 +1,10 @@
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import atelierDuneDark from "react-syntax-highlighter/dist/esm/styles/hljs/atelier-cave-dark";
-const CodeBlock = ({ codeString }: { codeString: string }) => {
+import * as themes from "react-syntax-highlighter/dist/esm/styles/hljs";
+const CodeBlock = ({ codeString, language }: { codeString: string, language: string }) => {
     return (
         <SyntaxHighlighter
-            language="javascript"
-            style={atelierDuneDark}
+            language={language}
+            style={themes["atomOneDark"]}
             wrapLongLines
             // showLineNumbers
             // showInlineLineNumbers
