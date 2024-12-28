@@ -23,6 +23,7 @@ import ReactMarkdown from "react-markdown";
 import { HttpMethodBadge } from "../log-table/http-methods";
 import remarkGfm from 'remark-gfm'; // Enables GitHub-flavored markdown
 import rehypeRaw from 'rehype-raw'; // Allows rendering raw HTML safely
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export interface SlideOverProps {
     open: boolean;
@@ -88,17 +89,19 @@ export function SolutionSlideOver({
                     <div className="text-xs" >
                         <Accordion type="single" collapsible className="">
                             <AccordionItem value="item-1">
-                                <AccordionTrigger className="text-xs border-0 ring-0 hover:ring-0 hover:border-0 ">
-                                    <Typography variant="small" className="font-semibold">
+                                <AccordionTrigger className="text-xs border-0 ring-0 hover:ring-0 hover:border-0  hover:bg-muted-foreground/50">
+                                    <Typography variant="small" className="font-semibold px-1">
                                         Stack Trace
                                     </Typography>
                                 </AccordionTrigger>
                                 <AccordionContent >
-                                    <pre>
-                                        <code>
-                                            <CodeBlock codeString={errorLog.traceback} />
-                                        </code>
-                                    </pre>
+                                    <ScrollArea className="h-[400px]  rounded-md border ">
+                                        <pre>
+                                            <code>
+                                                <CodeBlock codeString={errorLog.traceback} />
+                                            </code>
+                                        </pre>
+                                    </ScrollArea>
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
