@@ -126,6 +126,12 @@ function App() {
 					isStreaming: true,
 				}
 				appendTableDataToTop([logTableData]);
+				// Show notification in Electron
+				if (window.electronAPI) {
+					window.electronAPI.sendMessage('toMain', {
+						message: `New log received: ${chunk.data.raw_log.error}`,
+					});
+				}
 			} else if (chunk.action === "stream_log_response") {
 				setLogStreamingData({
 					application_id: chunk.data.application_id,
