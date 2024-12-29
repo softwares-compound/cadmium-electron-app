@@ -13,6 +13,7 @@ import { LogTableEntry } from "@/types/type";
 import { RagInference } from "./rag-inference";
 import { StackTrace } from "./stack-trace";
 import { GeneralInfo } from "./general-info";
+import StreamingComponent from "./test";
 
 export interface SlideOverProps {
     open: boolean;
@@ -50,6 +51,8 @@ export function SolutionSlideOver({
                         method={errorLog.method}
                         error={errorLog.error}
                     />
+
+                    <StreamingComponent />
 
                     {/* Stack Trace Accordion */}
                     <StackTrace traceback={errorLog.traceback} />

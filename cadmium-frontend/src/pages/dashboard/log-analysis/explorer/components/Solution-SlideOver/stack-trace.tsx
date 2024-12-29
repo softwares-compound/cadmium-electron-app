@@ -19,7 +19,7 @@ export function StackTrace({ traceback }: StackTraceProps) {
                         </Typography>
                     </AccordionTrigger>
                     <AccordionContent>
-                        <ScrollArea className="h-[400px] rounded-md border">
+                        <ScrollArea className="h-[400px] rounded-md border bg-black">
                             <pre>
                                 <code>
                                     <CodeBlock codeString={traceback} />

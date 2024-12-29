@@ -1,3 +1,5 @@
+
+
 type MessageListener = (message: any) => void;
 
 let socket: WebSocket | null = null;
@@ -24,7 +26,6 @@ export const connectWebSocket = (url: string): void => {
         socket.onmessage = (event: MessageEvent): void => {
             const chunk = JSON.parse(event.data);
             console.log("Received message from WebSocket:", chunk);
-
             // Notify all listeners of the new message
             messageListeners.forEach((listener) => listener(chunk));
         };
@@ -82,3 +83,5 @@ export const disconnectWebSocket = (): void => {
         isConnected = false;
     }
 };
+
+connectWebSocket("ws://localhost:6970/ws/electron");
