@@ -1,7 +1,7 @@
 // src/main/main.ts
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, Notification } from 'electron';
 import * as path from 'path';
-import { IPCChannels, ToMainPayload, FromMainPayload } from '../types/types';
+import { ToMainPayload, FromMainPayload } from '../types/types';
 import { startServer } from '../server/server';
 import { initializeDB } from '../server/config/sqlite';
 
@@ -35,8 +35,14 @@ function createWindow() {
 ipcMain.on('toMain', (event, args: ToMainPayload) => {
     console.log('Message received from renderer:', args);
 
+    // Show a notification
+    new Notification({
+        title: 'New Log Received',
+        body: args.message,
+    }).show();
+
     const response: FromMainPayload = {
-        response: `Received your message: "${args.message}"`,
+        response: `Notification displayed for message: "${args.message}"`,
     };
 
     event.sender.send('fromMain', response);
