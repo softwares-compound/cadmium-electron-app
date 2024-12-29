@@ -59,24 +59,24 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
                     >
                       {language}
                     </Typography>
-                                            <button
-                        onClick={() => handleCopySuccess(code)}
-                        className="flex items-center justify-center text-xs cursor-pointer text-gray-400 hover:text-gray-300 bg-gray-700 px-2 py-1 rounded-md min-w-[75px] transition-all duration-200"
-                        >
-                        <div className="flex items-center gap-1 min-w-[50px] justify-center">
-                            {copiedCode === code ? (
-                            <>
-                                <Check width={16} height={16} className="text-green-400" />
-                                <span>Copied</span>
-                            </>
-                            ) : (
-                            <>
-                                <Copy width={16} height={16} className="text-gray-400" />
-                                <span>Copy</span>
-                            </>
-                            )}
-                        </div>
-                        </button>
+                    <button
+                      onClick={() => handleCopySuccess(code)}
+                      className="flex items-center justify-center text-xs cursor-pointer text-gray-400 hover:text-gray-300 bg-gray-700 px-2 py-1 rounded-md min-w-[75px] transition-all duration-200"
+                    >
+                      <div className="flex items-center gap-1 min-w-[50px] justify-center">
+                        {copiedCode === code ? (
+                          <>
+                            <Check width={16} height={16} className="text-green-400" />
+                            <span>Copied</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy width={16} height={16} className="text-gray-400" />
+                            <span>Copy</span>
+                          </>
+                        )}
+                      </div>
+                    </button>
 
 
                   </div>
