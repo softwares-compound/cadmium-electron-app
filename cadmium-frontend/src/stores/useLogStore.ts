@@ -35,9 +35,7 @@ export const useLogStore = create<LogStoreState>((set) => ({
     updateLogEntryToStreamingComplete: (log_id: string) => {
         set((state) => ({
             tableData: state.tableData.map((entry) => {
-                console.log(entry.id, "=-=-=", log_id)
                 if (entry.id === log_id) {
-                    console.log("-=sdcljsdpcsd=-csdcsldkcjnhskcdhs8e4yru3e4iofhwoi8", "truuueee")
                     return {
                         ...entry,
                         isStreaming: false,

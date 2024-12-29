@@ -5,7 +5,7 @@
 	"scripts": {
 		"start": "concurrently \"npm:serve\" \"npm:electron\"",
 		"serve": "webpack --config webpack.main.config.cjs --mode development && webpack --config webpack.renderer.config.cjs --mode development && cd cadmium-frontend && npm start",
-		"electron": "wait-on http://localhost:5173 && electron .",
+		"electron": "wait-on http://localhost:6968 && electron .",
 		"build": "webpack --config webpack.main.config.cjs --mode production && webpack --config webpack.renderer.config.cjs --mode production && cd cadmium-frontend && npm run build",
 		"package": "electron-builder",
 		"postinstall": "electron-rebuild"

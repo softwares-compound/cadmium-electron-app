@@ -22,7 +22,7 @@ function createWindow() {
 
     const startUrl =
         process.env.NODE_ENV === 'development'
-            ? 'http://localhost:5173'
+            ? 'http://localhost:6968'
             : `file://${path.join(__dirname, '../../cadmium-frontend/build/index.html')}`;
 
     mainWindow.loadURL(startUrl);
