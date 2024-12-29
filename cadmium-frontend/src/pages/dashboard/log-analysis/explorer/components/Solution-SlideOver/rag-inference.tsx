@@ -9,6 +9,14 @@ import CodeBlock from "@/components/custom/global/code-block";
 export interface RagInferenceProps {
   ragResponse: string | undefined;
 }
+// Extend the props for `ol` and `li` components
+interface CustomOlProps extends React.OlHTMLAttributes<HTMLOListElement> {
+  ordered?: boolean;
+}
+
+interface CustomLiProps extends React.LiHTMLAttributes<HTMLLIElement> {
+  ordered?: boolean;
+}
 
 export function RagInference({ ragResponse }: RagInferenceProps) {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
@@ -16,7 +24,7 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
   const handleCopySuccess = (text: string) => {
     navigator.clipboard.writeText(text);
     setCopiedCode(text);
-    setTimeout(() => setCopiedCode(null), 6000); // Reset the copied state after 6 seconds
+    setTimeout(() => setCopiedCode(null), 6000); // Reset the copied state after 2 seconds
   };
 
   if (!ragResponse) {
@@ -77,6 +85,8 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
                         )}
                       </div>
                     </button>
+
+
                   </div>
                   <CodeBlock codeString={code} language={language} />
                 </div>
@@ -131,20 +141,36 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
                 {...props}
               />
             ),
-            ol: ({ children, ...props }) => (
-              <ol
-                className="list-decimal pl-6 my-4 text-gray-300 space-y-2"
-                {...props}
-              >
-                {React.Children.map(children, (child, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <span className="font-bold">{index + 1}.</span>
-                    {child}
-                  </li>
-                ))}
-              </ol>
-            ),
-            li: ({ ...props }) => <li className="my-2 text-gray-300" {...props} />,
+            ol: ({ ordered, children, ...props }: CustomOlProps) => {
+              if (ordered) {
+                return (
+                  <ol className="my-4 space-y-4" {...props}>
+                    {React.Children.map(children, (child, index) => (
+                      <div className="flex gap-4">
+                        <span className="text-gray-300 font-medium min-w-[1.5rem]">
+                          {index + 1}.
+                        </span>
+                        {child}
+                      </div>
+                    ))}
+                  </ol>
+                );
+              }
+              return (
+                <ol
+                  className="list-decimal pl-6 my-4 text-gray-300 space-y-2"
+                  {...props}
+                >
+                  {children}
+                </ol>
+              );
+            },
+            li: ({ ordered, ...props }: CustomLiProps) => {
+              if (ordered) {
+                return <li className="flex-1" {...props} />;
+              }
+              return <li {...props} />;
+            },
             a: ({ ...props }) => (
               <a
                 className="text-blue-400 underline hover:text-blue-300 transition-colors duration-200"
