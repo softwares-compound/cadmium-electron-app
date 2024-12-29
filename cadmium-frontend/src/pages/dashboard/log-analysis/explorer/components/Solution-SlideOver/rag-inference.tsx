@@ -1,8 +1,9 @@
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { Typography } from "@/components/ui/typography";
-import { Copy } from "lucide-react";
+import { Copy, Check } from "lucide-react";
 import CodeBlock from "@/components/custom/global/code-block";
 
 export interface RagInferenceProps {
@@ -10,6 +11,14 @@ export interface RagInferenceProps {
 }
 
 export function RagInference({ ragResponse }: RagInferenceProps) {
+  const [copiedCode, setCopiedCode] = useState<string | null>(null);
+
+  const handleCopySuccess = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedCode(text);
+    setTimeout(() => setCopiedCode(null), 6000); // Reset the copied state after 2 seconds
+  };
+
   if (!ragResponse) {
     return (
       <Typography
@@ -20,11 +29,6 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
       </Typography>
     );
   }
-
-  const handleCopySuccess = (text: string) => {
-    navigator.clipboard.writeText(text);
-    alert("Code copied to clipboard!");
-  };
 
   return (
     <div className="bg-gray-900 text-gray-100 p-8 rounded-lg shadow-lg">
@@ -55,12 +59,26 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
                     >
                       {language}
                     </Typography>
-                    <button
-                      onClick={() => handleCopySuccess(code)}
-                      className="flex items-center text-xs cursor-pointer text-gray-400 hover:text-gray-300 bg-gray-700 px-2 py-1 rounded-md"
-                    >
-                      <Copy width={16} className="mr-1" /> Copy
-                    </button>
+                                            <button
+                        onClick={() => handleCopySuccess(code)}
+                        className="flex items-center justify-center text-xs cursor-pointer text-gray-400 hover:text-gray-300 bg-gray-700 px-2 py-1 rounded-md min-w-[75px] transition-all duration-200"
+                        >
+                        <div className="flex items-center gap-1 min-w-[50px] justify-center">
+                            {copiedCode === code ? (
+                            <>
+                                <Check width={16} height={16} className="text-green-400" />
+                                <span>Copied</span>
+                            </>
+                            ) : (
+                            <>
+                                <Copy width={16} height={16} className="text-gray-400" />
+                                <span>Copy</span>
+                            </>
+                            )}
+                        </div>
+                        </button>
+
+
                   </div>
                   <CodeBlock codeString={code} />
                 </div>
@@ -105,7 +123,7 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
             ),
             blockquote: ({ ...props }) => (
               <blockquote
-                className="border-l-8 bg-gray-800 text-blue-400 italic p-4 my-6 rounded-lg border-gradient-to-r from-blue-500 to-blue-300"
+                className="border-l-8 bg-gray-800 text-blue-400 italic p-4 my-6 rounded-lg"
                 {...props}
               />
             ),
@@ -121,7 +139,9 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
                   <div className="my-4 space-y-4" {...props}>
                     {React.Children.map(children, (child, index) => (
                       <div className="flex gap-4">
-                        <span className="text-gray-300 font-medium min-w-[1.5rem]">{index + 1}.</span>
+                        <span className="text-gray-300 font-medium min-w-[1.5rem]">
+                          {index + 1}.
+                        </span>
                         {child}
                       </div>
                     ))}
@@ -129,7 +149,10 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
                 );
               }
               return (
-                <ol className="list-decimal pl-6 my-4 text-gray-300 space-y-2" {...props}>
+                <ol
+                  className="list-decimal pl-6 my-4 text-gray-300 space-y-2"
+                  {...props}
+                >
                   {children}
                 </ol>
               );
