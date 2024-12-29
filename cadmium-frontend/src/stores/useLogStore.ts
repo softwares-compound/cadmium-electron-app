@@ -34,11 +34,36 @@ export const useLogStore = create<LogStoreState>((set) => ({
 
     updateLogEntryToStreamingComplete: (log_id: string) => {
         set((state) => ({
-            tableData: state.tableData.map((entry) =>
-                entry.id === log_id ? { ...entry, isStreaming: false } : entry
-            ),
+            tableData: state.tableData.map((entry) => {
+                console.log(entry.id, "=-=-=", log_id)
+                if (entry.id === log_id) {
+                    console.log("-=sdcljsdpcsd=-csdcsldkcjnhskcdhs8e4yru3e4iofhwoi8", "truuueee")
+                    return {
+                        ...entry,
+                        isStreaming: false,
+                        ragInference: {
+                            rag_response: {
+                                formatted_rag_response: [],
+                                rag_response: {
+                                    application_id: "",
+                                    created_at: "", // ISO 8601 format
+                                    processed_at: "", // ISO 8601 format
+                                    query: "",
+                                    rag_response: state.logStreamingData.chunk,
+                                },
+                                application_id: "",
+                                created_at: "",
+                                query: "",
+                            }
+                        }
+                    };
+                }
+                return entry; // Unmodified entry
+            }),
         }));
     },
+
+
 
     // Append new logs to the existing table data
     appendTableDataToBottom: (newData: LogTableEntry[]) =>

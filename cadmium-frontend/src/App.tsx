@@ -111,9 +111,7 @@ function App() {
 	useEffect(() => {
 		// Define a listener to handle chunks
 		const handleChunk = (chunk: any) => {
-			console.log("Received message from WebSocket:", chunk);
 			if (chunk.action === "new_log") {
-				console.log("Received message from WebSocket new_log:", chunk);
 				const logTableData: LogTableEntry = {
 					id: chunk.data.log_id,
 					applicationId: chunk.data.application_id,
@@ -127,7 +125,6 @@ function App() {
 					traceback: chunk.data.raw_log.traceback,
 					isStreaming: true,
 				}
-				console.log("-=-=-=-=-=-=-=-", logTableData)
 				appendTableDataToTop([logTableData]);
 			} else if (chunk.action === "stream_log_response") {
 				setLogStreamingData({
@@ -135,11 +132,9 @@ function App() {
 					chunk: chunk.data.chunk,
 					log_id: chunk.data.log_id,
 				});
-				console.log("Received message from WebSocket log_process: stream_log_response", chunk);
 			} else if (chunk.action === "stream_complete") {
-				const log_id = chunk.data.log_id.$oid;
+				const log_id = chunk.data.log_id;
 				updateLogEntryToStreamingComplete(log_id);
-				console.log("Received message from WebSocket log_process_done: stream_complete", chunk);
 			} else {
 				console.log("Received message from WebSocket:", chunk);
 			}

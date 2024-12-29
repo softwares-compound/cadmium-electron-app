@@ -25,7 +25,7 @@ export const connectWebSocket = (url: string): void => {
 
         socket.onmessage = (event: MessageEvent): void => {
             const chunk = JSON.parse(event.data);
-            console.log("Received message from WebSocket:", chunk);
+            // console.log("Received message from WebSocket:", chunk);
             // Notify all listeners of the new message
             messageListeners.forEach((listener) => listener(chunk));
         };
