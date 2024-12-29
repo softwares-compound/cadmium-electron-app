@@ -10,7 +10,7 @@ import { LogTableEntry, RagResponse } from '@/types/type';
  * @returns {Promise<LogTableEntry[] | null>} A promise resolving to an array of log table entries or null if there was an error.
  */
 export const fetchLogTableData = async (application_id: string): Promise<LogTableEntry[] | null> => {
-    const { setLoading, limit, page, appendTableData } = useLogStore.getState(); // Zustand state for log
+    const { setLoading, limit, page, appendTableDataToBottom } = useLogStore.getState(); // Zustand state for log
     const cd_id = localStorage.getItem("cd_id") ?? "";
     const cd_secret = localStorage.getItem("cd_secret") ?? "";
     const headers = {
@@ -20,7 +20,7 @@ export const fetchLogTableData = async (application_id: string): Promise<LogTabl
         'Application-ID': application_id,
     };
 
-    const query = `
+    const query = ` 
     query GetLogs($page: Int, $limit: Int) {
         logs(page: $page, limit: $limit) {
             id
@@ -32,6 +32,7 @@ export const fetchLogTableData = async (application_id: string): Promise<LogTabl
             createdAt
             updatedAt
             ragInference
+            traceback
         }
     }
   `;
@@ -48,18 +49,19 @@ export const fetchLogTableData = async (application_id: string): Promise<LogTabl
             { query, variables },
             { headers }
         );
-
         if (response.data.errors) {
             console.error('Error fetching logs:', response.data.errors);
             return null;
         }
 
+
         // Parse ragInference for each log entry
         const logs: LogTableEntry[] = response.data.data.logs.map((log: any) => ({
             ...log,
+            isStreaming: false,
             ragInference: log.ragInference ? parseRagInference(log.ragInference) : null,
         }));
-        appendTableData(logs);
+        appendTableDataToBottom(logs);
         return logs;
     } catch (error) {
         console.error('Error during the API request:', error);

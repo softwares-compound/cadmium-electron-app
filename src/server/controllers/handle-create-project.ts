@@ -11,18 +11,18 @@ const handleCreateProject = async (req: Request, res: Response, next: NextFuncti
     try {
 
         const { project_name, project_description, project_id, organization_id } = req.body;
-        if (!project_name || !project_description || !project_id || !organization_id) {
-            res.status(400).json({ error: "project_name, project_description, project_id and organization_id are required." });
+        if (!project_name || !project_id || !organization_id) {
+            res.status(400).json({ error: "project_name, project_id and organization_id are required." });
             return;
         }
-        const project = ProjectModel.createProject(project_name, project_description, project_id, organization_id);
+        const project = ProjectModel.createProject(project_name, project_description ?? null, project_id, organization_id);
 
         if (!project) {
             res.status(500).json({ error: "Failed to create project." });
             return;
         }
 
-        const PROJECT_PATH = path.resolve(__dirname, `../target-codes/${project_id}`);
+        const PROJECT_PATH = path.resolve(__dirname, `../target-codebases/${project_id}`);
         if (!fs.existsSync(PROJECT_PATH)) {
             fs.mkdirSync(PROJECT_PATH, { recursive: true });
         }

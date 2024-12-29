@@ -49,7 +49,7 @@ const handleCheckProjectRemoteLink = async (req: Request, res: Response, next: N
                 // Create a new project if it doesn't exist
                 const { name, description, id } = item;
                 const project = ProjectModel.createProject(name, description, id, organization_id);
-                const PROJECT_PATH = path.resolve(__dirname, `../target-codes/${id}`);
+                const PROJECT_PATH = path.resolve(__dirname, `../target-codebases/${id}`);
                 if (!fs.existsSync(PROJECT_PATH)) {
                     fs.mkdirSync(PROJECT_PATH, { recursive: true });
                 }

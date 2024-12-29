@@ -28,8 +28,8 @@ const ChooseOrg: React.FC = () => {
     const handleChooseOrg = (org: Organization) => {
         localStorage.setItem("cd_id", org.cd_id);
         localStorage.setItem("cd_secret", org.cd_secret);
-        localStorage.setItem("organizationId", org.organization_id);
-        localStorage.setItem("organizationName", org.organization_name);
+        localStorage.setItem("organization_id", org.id);
+        localStorage.setItem("organization_name", org.organization_name);
         setIsLoggedIn(true);
         setOrganization(org.organization_name);
     }

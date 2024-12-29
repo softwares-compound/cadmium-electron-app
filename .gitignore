@@ -245,4 +245,4 @@ coverage/
 *.tar.gz
 
 # file for AI
-target-codes
+target-codebases

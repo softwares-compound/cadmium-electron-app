@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginNavbar from './components/custom/navbars/login-navbar';
 import { SidebarInset, SidebarProvider } from './components/ui/sidebar';
@@ -7,6 +7,9 @@ import PublicRouteProtector from './services/route-protector/public-route-protec
 import PrivateRouteProtector from './services/route-protector/private-route-protector';
 import ProjectPageNavbar from './components/custom/navbars/projects-page-navbar';
 import Footer from './components/custom/global/footer';
+import { addMessageListener, disconnectWebSocket, removeMessageListener } from './socket/socket';
+import { LogTableEntry } from './types/type';
+import { useLogStore } from './stores/useLogStore';
 
 
 // Lazy load pages
@@ -91,6 +94,64 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+	const { appendTableDataToTop, updateLogEntryToStreamingComplete, setLogStreamingData } = useLogStore();
+
+	/*
+	WebSocket message handling for new logs
+
+	This logic is part of the Log Analysis page under the Explorer tab.
+	The WebSocket connection and its message handling must be initialized at the root level of the app (in App.tsx).
+	This ensures the WebSocket listener is active as soon as the app starts, regardless of whether the Log Analysis -> Explorer tab has been rendered.
+
+	If the WebSocket logic were placed in log-analysis.tsx, it would only listen for messages when the Log Analysis page is rendered,
+	which is not desirable for real-time log updates.
+
+	By placing the WebSocket handling here, the app can start listening for WebSocket messages immediately after initialization.
+	*/
+	useEffect(() => {
+		// Define a listener to handle chunks
+		const handleChunk = (chunk: any) => {
+			if (chunk.action === "new_log") {
+				const logTableData: LogTableEntry = {
+					id: chunk.data.log_id,
+					applicationId: chunk.data.application_id,
+					organizationId: chunk.data.raw_log.organization_id.$oid,
+					error: chunk.data.raw_log.error,
+					url: chunk.data.raw_log.url,
+					method: chunk.data.raw_log.method,
+					createdAt: chunk.data.raw_log.created_at,
+					updatedAt: chunk.data.raw_log.updated_at,
+					ragInference: { rag_response: chunk.data.raw_log.ragInference ?? null },
+					traceback: chunk.data.raw_log.traceback,
+					isStreaming: true,
+				}
+				appendTableDataToTop([logTableData]);
+			} else if (chunk.action === "stream_log_response") {
+				setLogStreamingData({
+					application_id: chunk.data.application_id,
+					chunk: chunk.data.chunk,
+					log_id: chunk.data.log_id,
+				});
+			} else if (chunk.action === "stream_complete") {
+				const log_id = chunk.data.log_id;
+				updateLogEntryToStreamingComplete(log_id);
+			} else {
+				console.log("Received message from WebSocket:", chunk);
+			}
+			// setStreamedMessage((prev) => prev + chunk); // Append each chunk to the current message
+		};
+
+		// Add the listener
+		addMessageListener(handleChunk);
+
+		// Cleanup on component unmount
+		return () => {
+			removeMessageListener(handleChunk);
+			disconnectWebSocket();
+		};
+	}, []);
+
+
 	return <RouterProvider router={router} />;
 }
 export default App;
