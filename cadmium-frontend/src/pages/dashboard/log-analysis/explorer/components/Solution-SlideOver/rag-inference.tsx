@@ -40,8 +40,8 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
           rehypePlugins={[rehypeRaw]}
           components={{
             code({ className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || ""); // Extract language
-              const language = match ? match[1].toLowerCase() : "code"; // Use lowercase language or default to "code"
+              const match = /language-(\w+)/.exec(className || "");
+              const language = match ? match[1].toLowerCase() : "code";
               const code = String(children).replace(/\n$/, "");
 
               return match ? (
@@ -111,16 +111,35 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
             ),
             ul: ({ ...props }) => (
               <ul
-                className="list-disc list-inside my-4 text-gray-300 space-y-2"
+                className="list-disc pl-6 my-4 text-gray-300 space-y-2"
                 {...props}
               />
             ),
-            ol: ({ ...props }) => (
-              <ol
-                className="list-decimal list-inside my-4 text-gray-300 space-y-2"
-                {...props}
-              />
-            ),
+            ol: ({ ordered, children, ...props }) => {
+              if (ordered) {
+                return (
+                  <div className="my-4 space-y-4" {...props}>
+                    {React.Children.map(children, (child, index) => (
+                      <div className="flex gap-4">
+                        <span className="text-gray-300 font-medium min-w-[1.5rem]">{index + 1}.</span>
+                        {child}
+                      </div>
+                    ))}
+                  </div>
+                );
+              }
+              return (
+                <ol className="list-decimal pl-6 my-4 text-gray-300 space-y-2" {...props}>
+                  {children}
+                </ol>
+              );
+            },
+            li: ({ ordered, ...props }) => {
+              if (ordered) {
+                return <div className="flex-1" {...props} />;
+              }
+              return <li {...props} />;
+            },
             a: ({ ...props }) => (
               <a
                 className="text-blue-400 underline hover:text-blue-300 transition-colors duration-200"
@@ -162,3 +181,5 @@ export function RagInference({ ragResponse }: RagInferenceProps) {
     </div>
   );
 }
+
+export default RagInference;
