@@ -140,6 +140,7 @@ export interface LogTableEntry {
     updatedAt: string; // ISO 8601 format
     ragInference: { rag_response: RagResponse | null }; // Parsed JSON or null if parsing fails
     traceback: string;
+    isStreaming?: boolean;
 }
 
 // Example: Array of log entries
@@ -160,8 +161,15 @@ export interface LogStoreState {
     setLimit: (limit: number) => void;
     tableData: LogTableEntry[];
     setTableData: (tableData: LogTableEntry[]) => void;
-    appendTableData: (newData: LogTableEntry[]) => void;
+    appendTableDataToBottom: (newData: LogTableEntry[]) => void;
+    appendTableDataToTop: (newData: LogTableEntry[]) => void;
     resetTableData: () => void;
     totalLogs: number | null; // Add this
     setTotalLogs: (totalLogs: number) => void; // Add this
 }
+
+export type StreamResponse = {
+    application_id: string;
+    chunk: string;
+    log_id: string;
+};

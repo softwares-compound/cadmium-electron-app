@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  outline: none !important;
+}
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -96,7 +99,6 @@ button:hover {
 }
 
 @layer utilities {
-
   /* * SCROLL BAR */
   /* For Webkit browsers (Chrome, Safari) */
   ::-webkit-scrollbar {

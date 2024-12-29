@@ -33,8 +33,11 @@ export const useLogStore = create<LogStoreState>((set) => ({
     setTableData: (tableData: LogTableEntry[]) => set({ tableData }),
 
     // Append new logs to the existing table data
-    appendTableData: (newData: LogTableEntry[]) =>
+    appendTableDataToBottom: (newData: LogTableEntry[]) =>
         set((state) => ({ tableData: [...state.tableData, ...newData] })),
+
+    appendTableDataToTop: (newData: LogTableEntry[]) =>
+        set((state) => ({ tableData: [...newData, ...state.tableData] })),
 
     // Reset table data and pagination
     resetTableData: () =>
