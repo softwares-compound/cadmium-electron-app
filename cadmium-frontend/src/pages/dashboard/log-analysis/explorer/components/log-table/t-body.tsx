@@ -24,7 +24,7 @@ const TBody: React.FC<Props> = ({ tableData, onRowClick }) => {
             {tableData && tableData.map((data, index) => (
                 <TableRow
                     key={index}
-                    className={`cursor-pointer dark:hover:bg-muted-foreground hover:bg-accent ${index === 3 && "animate-pulse bg-muted-foreground"} `}
+                    className={`cursor-pointer dark:hover:bg-muted-foreground hover:bg-accent ${data.isStreaming === true && "animate-pulse bg-muted-foreground"} `}
                     onClick={() => handleRowClick(data)}
                 >
                     <TableCell className="font-medium">{new Date(data.createdAt).toLocaleString()}</TableCell>

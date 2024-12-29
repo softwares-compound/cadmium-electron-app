@@ -60,11 +60,14 @@ export function SolutionSlideOver({
                     <DialogTitle className="text-lg font-semibold">Possible solution</DialogTitle>
 
                     {/* Rag inference */}
-                    <RagInference
-                        ragResponse={
-                            errorLog.ragInference?.rag_response?.rag_response?.rag_response
-                        }
-                    />
+                    {
+                        errorLog.isStreaming === true ? <StreamingComponent /> :
+                            <RagInference
+                                ragResponse={
+                                    errorLog.ragInference?.rag_response?.rag_response?.rag_response
+                                }
+                            />
+                    }
                 </div>
 
                 <SheetFooter>

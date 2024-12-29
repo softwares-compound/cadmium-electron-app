@@ -161,8 +161,11 @@ export interface LogStoreState {
     setLimit: (limit: number) => void;
     tableData: LogTableEntry[];
     setTableData: (tableData: LogTableEntry[]) => void;
+    updateLogEntryToStreamingComplete: (logId: string) => void;
     appendTableDataToBottom: (newData: LogTableEntry[]) => void;
     appendTableDataToTop: (newData: LogTableEntry[]) => void;
+    logStreamingData: StreamResponse;
+    setLogStreamingData: (logStreamingData: StreamResponse | null) => void;
     resetTableData: () => void;
     totalLogs: number | null; // Add this
     setTotalLogs: (totalLogs: number) => void; // Add this

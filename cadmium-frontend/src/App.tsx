@@ -94,7 +94,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	const { appendTableDataToTop } = useLogStore();
+	const { appendTableDataToTop, updateLogEntryToStreamingComplete, setLogStreamingData } = useLogStore();
 
 	/*
 	WebSocket message handling for new logs
@@ -113,7 +113,7 @@ function App() {
 		const handleChunk = (chunk: any) => {
 			console.log("Received message from WebSocket:", chunk);
 			if (chunk.action === "new_log") {
-				console.log("Received message from WebSocket:", chunk);
+				console.log("Received message from WebSocket new_log:", chunk);
 				const logTableData: LogTableEntry = {
 					id: chunk.data.log_id,
 					applicationId: chunk.data.application_id,
@@ -125,9 +125,22 @@ function App() {
 					updatedAt: chunk.data.raw_log.updated_at,
 					ragInference: { rag_response: chunk.data.raw_log.ragInference ?? null },
 					traceback: chunk.data.raw_log.traceback,
+					isStreaming: true,
 				}
+				console.log("-=-=-=-=-=-=-=-", logTableData)
 				appendTableDataToTop([logTableData]);
-			} else if (chunk.action === "log_process") {
+			} else if (chunk.action === "stream_log_response") {
+				setLogStreamingData({
+					application_id: chunk.data.application_id,
+					chunk: chunk.data.chunk,
+					log_id: chunk.data.log_id,
+				});
+				console.log("Received message from WebSocket log_process: stream_log_response", chunk);
+			} else if (chunk.action === "stream_complete") {
+				const log_id = chunk.data.log_id.$oid;
+				updateLogEntryToStreamingComplete(log_id);
+				console.log("Received message from WebSocket log_process_done: stream_complete", chunk);
+			} else {
 				console.log("Received message from WebSocket:", chunk);
 			}
 			// setStreamedMessage((prev) => prev + chunk); // Append each chunk to the current message
