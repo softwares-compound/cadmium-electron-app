@@ -1,4 +1,4 @@
-import { LogStoreState, LogTableEntry } from "@/types/type";
+import { LogStoreState, LogTableEntry, StreamResponse } from "@/types/type";
 import { create } from "zustand";
 
 export const useLogStore = create<LogStoreState>((set) => ({
@@ -32,12 +32,60 @@ export const useLogStore = create<LogStoreState>((set) => ({
     tableData: [],
     setTableData: (tableData: LogTableEntry[]) => set({ tableData }),
 
+    updateLogEntryToStreamingComplete: (log_id: string) => {
+        set((state) => ({
+            tableData: state.tableData.map((entry) => {
+                console.log(entry.id, "=-=-=", log_id)
+                if (entry.id === log_id) {
+                    console.log("-=sdcljsdpcsd=-csdcsldkcjnhskcdhs8e4yru3e4iofhwoi8", "truuueee")
+                    return {
+                        ...entry,
+                        isStreaming: false,
+                        ragInference: {
+                            rag_response: {
+                                formatted_rag_response: [],
+                                rag_response: {
+                                    application_id: "",
+                                    created_at: "", // ISO 8601 format
+                                    processed_at: "", // ISO 8601 format
+                                    query: "",
+                                    rag_response: state.logStreamingData.chunk,
+                                },
+                                application_id: "",
+                                created_at: "",
+                                query: "",
+                            }
+                        }
+                    };
+                }
+                return entry; // Unmodified entry
+            }),
+        }));
+    },
+
+
+
     // Append new logs to the existing table data
     appendTableDataToBottom: (newData: LogTableEntry[]) =>
         set((state) => ({ tableData: [...state.tableData, ...newData] })),
 
     appendTableDataToTop: (newData: LogTableEntry[]) =>
         set((state) => ({ tableData: [...newData, ...state.tableData] })),
+
+    logStreamingData: {
+        application_id: "",
+        chunk: "",
+        log_id: "",
+    },
+    setLogStreamingData: (logStreamingData: StreamResponse | null) => set(state => (
+        {
+            logStreamingData: {
+                application_id: logStreamingData?.application_id ?? "",
+                chunk: state.logStreamingData.chunk + logStreamingData?.chunk,
+                log_id: logStreamingData?.log_id ?? "",
+            }
+        }
+    )),
 
     // Reset table data and pagination
     resetTableData: () =>
