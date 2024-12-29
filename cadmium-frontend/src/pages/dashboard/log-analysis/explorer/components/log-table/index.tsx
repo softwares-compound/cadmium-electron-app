@@ -58,7 +58,12 @@ const LogTable: React.FC = () => {
         <div>
             <Typography variant="xl" className=" px-2 py-2 ">Error logs</Typography>
 
-            <div id='scrollableDiv' className='w-full max-h-[calc(100dvh-45dvh)] overflow-y-scroll relative scrollbar scrollbar-hide'>
+            
+            <Table>
+                <THead />
+            </Table>
+
+            <div id='scrollableDiv' className='w-full max-h-[calc(100dvh-49dvh)] overflow-y-scroll relative scrollbar scrollbar-hide'>
                 <InfiniteScroll
                     dataLength={tableData.length} // Current data length
                     next={fetchMoreData} // Function to fetch the next page
@@ -67,12 +72,12 @@ const LogTable: React.FC = () => {
                     scrollableTarget="scrollableDiv" // Target for scrollable container
                 >
                     <Table>
-                        <THead />
+                        {/* <THead /> */}
                         <TBody tableData={tableData ?? []} onRowClick={handleRowClick} />
                     </Table>
                 </InfiniteScroll>
             </div>
-
+            
             {
                 isLoading
                     ? <p>Loading...</p>
@@ -85,7 +90,10 @@ const LogTable: React.FC = () => {
                 <Typography variant="sm" className="text-muted-foreground px-2 py-8 text-center">No logs found.</Typography>
             }
             <SolutionSlideOver open={openSlideOver} onOpenChange={setOpenSlideOver} errorLog={selectedLog} onMarkResolved={() => setOpenSlideOver(false)} />
+        
         </div>
+
+
     )
 }
 

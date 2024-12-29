@@ -27,9 +27,9 @@ const TBody: React.FC<Props> = ({ tableData, onRowClick }) => {
                     className="cursor-pointer dark:hover:bg-muted-foreground hover:bg-accent"
                     onClick={() => handleRowClick(data)}
                 >
-                    <TableCell className="font-medium">{new Date(data.createdAt).toLocaleString()}</TableCell>
-                    <TableCell className="text-left ">{addEllipsis(data.error, 100, 3)}</TableCell>
-                    <TableCell className="">
+                    <TableCell className="font-medium w-[250px]">{new Date(data.createdAt).toLocaleString()}</TableCell>
+                    <TableCell className="text-left w-[700px]">{addEllipsis(data.error, 100, 3)}</TableCell>
+                    <TableCell className="w-[100px]">
                         <HttpMethodBadge variant={data.method}>{data.method}</HttpMethodBadge>
                     </TableCell>
                     <TableCell className="">{getApiEndpoint(data.url)}</TableCell>
