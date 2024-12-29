@@ -57,20 +57,22 @@ const LogTable: React.FC = () => {
     return (
         <div>
             <Typography variant="xl" className=" px-2 py-2 ">Error logs</Typography>
-            {/* <div className='w-full max-h-[calc(100dvh-46dvh)] overflow-y-scroll relative scrollbar scrollbar-hide'> */}
-            <InfiniteScroll
-                dataLength={tableData.length} // Current data length
-                next={fetchMoreData} // Function to fetch the next page
-                hasMore={tableData.length >= limit} // Stop scrolling when all logs are loaded
-                loader={loading && <p className='text-center my-4'>Loading...</p>} // Loader shown during fetch
-                scrollableTarget="scrollableDiv" // Target for scrollable container
-            >
-                <Table>
-                    <THead />
-                    <TBody tableData={tableData ?? []} onRowClick={handleRowClick} />
-                </Table>
-            </InfiniteScroll>
-            {/* </div> */}
+
+            <div id='scrollableDiv' className='w-full max-h-[calc(100dvh-45dvh)] overflow-y-scroll relative scrollbar scrollbar-hide'>
+                <InfiniteScroll
+                    dataLength={tableData.length} // Current data length
+                    next={fetchMoreData} // Function to fetch the next page
+                    hasMore={tableData.length >= limit} // Stop scrolling when all logs are loaded
+                    loader={loading && <p className='text-center my-4'>Loading...</p>} // Loader shown during fetch
+                    scrollableTarget="scrollableDiv" // Target for scrollable container
+                >
+                    <Table>
+                        <THead />
+                        <TBody tableData={tableData ?? []} onRowClick={handleRowClick} />
+                    </Table>
+                </InfiniteScroll>
+            </div>
+
             {
                 isLoading
                     ? <p>Loading...</p>
