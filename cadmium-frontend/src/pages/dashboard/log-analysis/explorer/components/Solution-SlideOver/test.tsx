@@ -25,7 +25,7 @@ const StreamingComponent: React.FC = () => {
 
     return (
         <div>
-            <h1>Streaming Data</h1>
+
             <pre>{streamedMessage}</pre> {/* Display the streamed message */}
         </div>
     );
