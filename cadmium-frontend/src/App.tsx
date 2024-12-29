@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginNavbar from './components/custom/navbars/login-navbar';
 import { SidebarInset, SidebarProvider } from './components/ui/sidebar';
@@ -7,6 +7,7 @@ import PublicRouteProtector from './services/route-protector/public-route-protec
 import PrivateRouteProtector from './services/route-protector/private-route-protector';
 import ProjectPageNavbar from './components/custom/navbars/projects-page-navbar';
 import Footer from './components/custom/global/footer';
+import { connectWebSocket, disconnectWebSocket } from './socket/socket';
 
 
 // Lazy load pages
@@ -91,6 +92,15 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+	useEffect(() => {
+		// Initialize WebSocket connection
+		connectWebSocket("ws://localhost:6970/ws/electron");
+
+		// Cleanup on component unmount
+		return () => {
+			disconnectWebSocket();
+		};
+	}, []);
 	return <RouterProvider router={router} />;
 }
 export default App;
