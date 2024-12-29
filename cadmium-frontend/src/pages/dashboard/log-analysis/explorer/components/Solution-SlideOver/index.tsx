@@ -13,7 +13,7 @@ import { LogTableEntry } from "@/types/type";
 import { RagInference } from "./rag-inference";
 import { StackTrace } from "./stack-trace";
 import { GeneralInfo } from "./general-info";
-import StreamingComponent from "./test";
+import { useLogStore } from "@/stores/useLogStore";
 
 export interface SlideOverProps {
     open: boolean;
@@ -28,7 +28,7 @@ export function SolutionSlideOver({
     errorLog,
     onMarkResolved,
 }: SlideOverProps) {
-
+    const { logStreamingData } = useLogStore();
     if (!errorLog) {
         return null;
     }
@@ -52,7 +52,6 @@ export function SolutionSlideOver({
                         error={errorLog.error}
                     />
 
-                    <StreamingComponent />
 
                     {/* Stack Trace Accordion */}
                     <StackTrace traceback={errorLog.traceback} />
@@ -60,11 +59,18 @@ export function SolutionSlideOver({
                     <DialogTitle className="text-lg font-semibold">Possible solution</DialogTitle>
 
                     {/* Rag inference */}
-                    <RagInference
-                        ragResponse={
-                            errorLog.ragInference?.rag_response?.rag_response?.rag_response
-                        }
-                    />
+                    {
+                        errorLog.isStreaming === true && errorLog.id === logStreamingData.log_id ? <RagInference
+                            ragResponse={
+                                logStreamingData.chunk
+                            }
+                        /> :
+                            <RagInference
+                                ragResponse={
+                                    errorLog.ragInference?.rag_response?.rag_response?.rag_response
+                                }
+                            />
+                    }
                 </div>
 
                 <SheetFooter>
