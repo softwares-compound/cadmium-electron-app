@@ -4,7 +4,7 @@ import env from './env';
 export default {
     port: env.PORT || 6969,
     cors: {
-        origin: env.CORS_ORIGIN || 'http://localhost:6968',
+        origin: env.CORS_ORIGIN || 'http://localhost:5173',
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         credentials: true,
     },
