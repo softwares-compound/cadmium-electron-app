@@ -94,7 +94,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	const { appendTableDataToTop, updateLogEntryToStreamingComplete, setLogStreamingData } = useLogStore();
+	const { appendTableDataToTop, setLogStreamingComplete, setLogStreamingData } = useLogStore();
 
 	/*
 	WebSocket message handling for new logs
@@ -125,6 +125,11 @@ function App() {
 					traceback: chunk.data.raw_log.traceback,
 					isStreaming: true,
 				}
+				setLogStreamingData({
+					application_id: "",
+					chunk: "",
+					log_id: "",
+				})
 				appendTableDataToTop([logTableData]);
 				// Show notification in Electron
 				if (window.electronAPI) {
@@ -140,7 +145,7 @@ function App() {
 				});
 			} else if (chunk.action === "stream_complete") {
 				const log_id = chunk.data.log_id;
-				updateLogEntryToStreamingComplete(log_id);
+				setLogStreamingComplete(log_id);
 			} else {
 				console.log("Received message from WebSocket:", chunk);
 			}

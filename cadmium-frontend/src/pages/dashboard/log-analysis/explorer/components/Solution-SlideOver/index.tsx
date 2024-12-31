@@ -14,6 +14,7 @@ import { RagInference } from "./rag-inference";
 import { StackTrace } from "./stack-trace";
 import { GeneralInfo } from "./general-info";
 import { useLogStore } from "@/stores/useLogStore";
+import { useEffect } from "react";
 
 export interface SlideOverProps {
     open: boolean;
@@ -28,10 +29,15 @@ export function SolutionSlideOver({
     errorLog,
     onMarkResolved,
 }: SlideOverProps) {
-    const { logStreamingData } = useLogStore();
+    const { logStreamingData, updateComplete } = useLogStore();
+    useEffect(() => {
+        console.log("Force re-render on update completion:", updateComplete);
+    }, [updateComplete]);
+
     if (!errorLog) {
         return null;
     }
+
 
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>

@@ -32,11 +32,11 @@ export const useLogStore = create<LogStoreState>((set) => ({
     tableData: [],
     setTableData: (tableData: LogTableEntry[]) => set({ tableData }),
 
-    updateLogEntryToStreamingComplete: (log_id: string) => {
+    setLogStreamingComplete: (log_id: string) => {
         set((state) => ({
             tableData: state.tableData.map((entry) => {
                 if (entry.id === log_id) {
-                    return {
+                    const updatedEntry = {
                         ...entry,
                         isStreaming: false,
                         ragInference: {
@@ -55,13 +55,17 @@ export const useLogStore = create<LogStoreState>((set) => ({
                             }
                         }
                     };
+                    return updatedEntry;
                 }
-                return entry; // Unmodified entry
+
+                return entry;
             }),
         }));
+        useLogStore.getState().notifyUpdateComplete();
     },
 
-
+    updateComplete: false,
+    notifyUpdateComplete: () => set((state) => ({ updateComplete: !state.updateComplete })),
 
     // Append new logs to the existing table data
     appendTableDataToBottom: (newData: LogTableEntry[]) =>
@@ -75,15 +79,18 @@ export const useLogStore = create<LogStoreState>((set) => ({
         chunk: "",
         log_id: "",
     },
-    setLogStreamingData: (logStreamingData: StreamResponse | null) => set(state => (
-        {
-            logStreamingData: {
-                application_id: logStreamingData?.application_id ?? "",
-                chunk: state.logStreamingData.chunk + logStreamingData?.chunk,
-                log_id: logStreamingData?.log_id ?? "",
-            }
-        }
-    )),
+    setLogStreamingData: (logStreamingData: StreamResponse | null) =>
+        set(state => {
+            // If the incoming log_id is different, reset the chunk
+            const isNewLog = state.logStreamingData.log_id !== logStreamingData?.log_id;
+            return {
+                logStreamingData: {
+                    application_id: logStreamingData?.application_id ?? "",
+                    chunk: isNewLog ? logStreamingData?.chunk ?? "" : state.logStreamingData.chunk + (logStreamingData?.chunk ?? ""),
+                    log_id: logStreamingData?.log_id ?? "",
+                }
+            };
+        }),
 
     // Reset table data and pagination
     resetTableData: () =>

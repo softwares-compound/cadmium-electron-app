@@ -1,45 +1,57 @@
-
-
 type MessageListener = (message: any) => void;
 
 let socket: WebSocket | null = null;
 let isConnected = false;
 const messageListeners: MessageListener[] = [];
-
-// *********************************
-// ! Initialization of WebSocket connection is done in App.tsx
-// *********************************
+let retryInterval = 1000; // Initial retry interval in milliseconds
+const maxRetryInterval = 60000; // Maximum retry interval
 
 /**
  * Connect to the WebSocket server.
  * @param url - The WebSocket server URL.
  */
 export const connectWebSocket = (url: string): void => {
-    if (!socket) {
-        socket = new WebSocket(url);
+    if (socket) return; // Prevent multiple connections
 
-        socket.onopen = (): void => {
-            console.log("WebSocket connection established!");
-            isConnected = true;
-        };
+    socket = new WebSocket(url);
 
-        socket.onmessage = (event: MessageEvent): void => {
-            const chunk = JSON.parse(event.data);
-            // console.log("Received message from WebSocket:", chunk);
-            // Notify all listeners of the new message
-            messageListeners.forEach((listener) => listener(chunk));
-        };
+    socket.onopen = (): void => {
+        console.log("WebSocket connection established!");
+        isConnected = true;
+        retryInterval = 1000; // Reset retry interval on successful connection
+        // startKeepAlive(); // Start sending keep-alive pings
+    };
 
-        socket.onclose = (): void => {
-            console.log("WebSocket connection closed.");
-            isConnected = false;
-            socket = null;
-        };
+    socket.onmessage = (event: MessageEvent): void => {
+        const chunk = JSON.parse(event.data);
+        // Notify all listeners of the new message
+        messageListeners.forEach((listener) => listener(chunk));
+    };
 
-        socket.onerror = (error: Event): void => {
-            console.error("WebSocket error:", error);
-        };
-    }
+    socket.onclose = (): void => {
+        console.log("WebSocket connection closed.");
+        isConnected = false;
+        socket = null;
+        retryConnection(url); // Attempt reconnection
+    };
+
+    socket.onerror = (error: Event): void => {
+        console.error("WebSocket error:", error);
+        if (!isConnected) retryConnection(url); // Attempt reconnection on error
+    };
+};
+
+/**
+ * Reconnect to the WebSocket server with exponential backoff.
+ * @param url - The WebSocket server URL.
+ */
+const retryConnection = (url: string): void => {
+    console.log(`Retrying connection in ${retryInterval / 1000} seconds...`);
+    setTimeout(() => {
+        console.log("Attempting to reconnect to WebSocket...");
+        connectWebSocket(url);
+        retryInterval = Math.min(maxRetryInterval, retryInterval * 2); // Exponential backoff
+    }, retryInterval);
 };
 
 /**
@@ -84,4 +96,20 @@ export const disconnectWebSocket = (): void => {
     }
 };
 
+/**
+ * Periodically send a ping message to the server to keep the connection alive.
+ */
+// const startKeepAlive = (): void => {
+//     if (!socket || !isConnected) return;
+
+//     const intervalId = setInterval(() => {
+//         if (socket && isConnected) {
+//             socket.send(JSON.stringify({ type: "ping", timestamp: Date.now() }));
+//         } else {
+//             clearInterval(intervalId); // Stop keep-alive when disconnected
+//         }
+//     }, 30000); // Send ping every 30 seconds
+// };
+
+// Initialize WebSocket connection
 connectWebSocket("ws://localhost:6970/ws/electron");
