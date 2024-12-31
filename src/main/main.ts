@@ -22,7 +22,7 @@ function createWindow() {
 
     const startUrl =
         process.env.NODE_ENV === 'development'
-            ? 'http://localhost:6968'
+            ? 'http://localhost:5173'
             : `file://${path.join(__dirname, '../../cadmium-frontend/build/index.html')}`;
 
     mainWindow.loadURL(startUrl);
@@ -37,7 +37,7 @@ ipcMain.on('toMain', (event, args: ToMainPayload) => {
 
     // Show a notification
     new Notification({
-        title: 'New Log Received',
+        title: 'Error occured in your application',
         body: args.message,
     }).show();
 

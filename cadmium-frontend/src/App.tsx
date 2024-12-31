@@ -143,7 +143,7 @@ function App() {
 				// Show notification in Electron
 				if (window.electronAPI) {
 					window.electronAPI.sendMessage('toMain', {
-						message: `New log received: ${chunk.data.raw_log.error}`,
+						message: ` ${chunk.data.raw_log.error}`,
 					});
 				}
 			} else if (chunk.action === "stream_log_response") {

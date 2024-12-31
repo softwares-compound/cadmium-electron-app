@@ -19,7 +19,9 @@ export const connectWebSocket = (url: string): void => {
         console.log("WebSocket connection established!");
         isConnected = true;
         retryInterval = 1000; // Reset retry interval on successful connection
-        // startKeepAlive(); // Start sending keep-alive pings
+
+        startKeepAlive(); // Start sending keep-alive pings
+
     };
 
     socket.onmessage = (event: MessageEvent): void => {
@@ -99,17 +101,19 @@ export const disconnectWebSocket = (): void => {
 /**
  * Periodically send a ping message to the server to keep the connection alive.
  */
-// const startKeepAlive = (): void => {
-//     if (!socket || !isConnected) return;
 
-//     const intervalId = setInterval(() => {
-//         if (socket && isConnected) {
-//             socket.send(JSON.stringify({ type: "ping", timestamp: Date.now() }));
-//         } else {
-//             clearInterval(intervalId); // Stop keep-alive when disconnected
-//         }
-//     }, 30000); // Send ping every 30 seconds
-// };
+const startKeepAlive = (): void => {
+    if (!socket || !isConnected) return;
+
+    const intervalId = setInterval(() => {
+        if (socket && isConnected) {
+            socket.send(JSON.stringify({ type: "ping", timestamp: Date.now() }));
+        } else {
+            clearInterval(intervalId); // Stop keep-alive when disconnected
+        }
+    }, 30000); // Send ping every 30 seconds
+};
 
 // Initialize WebSocket connection
 connectWebSocket("ws://localhost:6970/ws/electron");
+

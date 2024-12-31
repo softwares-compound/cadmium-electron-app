@@ -97,7 +97,7 @@ electron_react_app/
    ```
    Add environment-specific variables in the `.env` file, such as API URLs, ports, or secret keys:
    ```
-   CORS_ORIGIN=http://localhost:6968
+   CORS_ORIGIN=http://localhost:5173
    PORT=6969
    ```
 
@@ -107,7 +107,7 @@ Here are the key `scripts` defined in the root `package.json`:
 
 - `start`: Runs both the Electron app and the React client concurrently using [concurrently](https://www.npmjs.com/package/concurrently).
   - `serve`: Builds the main and renderer processes using Webpack in development mode and then starts the React client.
-  - `electron`: Waits for the React client to be available at `http://localhost:6968` and then launches the Electron app.
+  - `electron`: Waits for the React client to be available at `http://localhost:5173` and then launches the Electron app.
 
 - `build`: Creates production builds for both the Electron main and renderer processes, and the React client.
 
@@ -116,13 +116,13 @@ Here are the key `scripts` defined in the root `package.json`:
 
 ### `electron`
 
-Launches the Electron app using [wait-on](https://www.npmjs.com/package/wait-on) to wait for the React client to be available at `http://localhost:6968` before launching the Electron app.
+Launches the Electron app using [wait-on](https://www.npmjs.com/package/wait-on) to wait for the React client to be available at `http://localhost:5173` before launching the Electron app.
 ```json
-"electron": "wait-on http://localhost:6968 && electron .",
+"electron": "wait-on http://localhost:5173 && electron .",
 ```
 
 **Flow**:
-1. Uses `wait-on` to check that the React client is available at `http://localhost:6968`.
+1. Uses `wait-on` to check that the React client is available at `http://localhost:5173`.
 2. Launches the Electron app:
    ```bash
    electron .
@@ -157,7 +157,7 @@ Start React client:
 cd cadmium-frontend
 npm start
 ```
-Launches the React development server (usually on http://localhost:6968).
+Launches the React development server (usually on http://localhost:5173).
 Outcome:
 
 Builds the Electron app and serves the React front-end.
