@@ -28,10 +28,17 @@ export function SolutionSlideOver({
     errorLog,
     onMarkResolved,
 }: SlideOverProps) {
-    const { logStreamingData } = useLogStore();
+
+    const {
+        streamingData
+    } = useLogStore();
+
+
     if (!errorLog) {
         return null;
     }
+
+    console.log("streamingData", streamingData?.id, "====", errorLog.id);
 
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
@@ -60,9 +67,9 @@ export function SolutionSlideOver({
 
                     {/* Rag inference */}
                     {
-                        errorLog.isStreaming === true && errorLog.id === logStreamingData.log_id ? <RagInference
+                        streamingData && streamingData.id === errorLog.id ? <RagInference
                             ragResponse={
-                                logStreamingData.chunk
+                                streamingData.ragInference.rag_response?.rag_response.rag_response
                             }
                         /> :
                             <RagInference

@@ -39,10 +39,6 @@ const LogTable: React.FC = () => {
         refetchOnWindowFocus: false
     })
 
-    // useEffect(() => {
-    //     fetchLogTableData(cd_id, cd_secret, project_id ?? "");
-    // }, [cd_id, cd_secret, project_id, page]);
-
     const fetchMoreData = () => {
         if (!loading && tableData.length < (totalLogs || Infinity)) {
             incrementPage();
@@ -51,8 +47,8 @@ const LogTable: React.FC = () => {
     };
 
     const handleRowClick = async (data: LogTableEntry) => {
-        setOpenSlideOver(true);
         setSelectedLog(data);
+        setOpenSlideOver(true);
     }
     return (
         <div>
@@ -73,13 +69,13 @@ const LogTable: React.FC = () => {
             {/* </div> */}
             {
                 isLoading
-                    ? <p>Loading...</p>
+                    ? <p className='text-center my-5'>Loading...</p>
                     : error
                         ? <p>Error: {error.message}</p>
                         : null
             }
             {
-                tableData === null || tableData.length === 0 &&
+                tableData === null || tableData.length === 0 && !loading &&
                 <Typography variant="sm" className="text-muted-foreground px-2 py-8 text-center">No logs found.</Typography>
             }
             <SolutionSlideOver open={openSlideOver} onOpenChange={setOpenSlideOver} errorLog={selectedLog} onMarkResolved={() => setOpenSlideOver(false)} />
