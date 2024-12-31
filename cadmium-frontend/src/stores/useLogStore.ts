@@ -32,40 +32,42 @@ export const useLogStore = create<LogStoreState>((set) => ({
     tableData: [],
     setTableData: (tableData: LogTableEntry[]) => set({ tableData }),
 
-    setLogStreamingComplete: (log_id: string) => {
-        set((state) => ({
-            tableData: state.tableData.map((entry) => {
-                if (entry.id === log_id) {
-                    const updatedEntry = {
-                        ...entry,
-                        isStreaming: false,
+    streamingData: null,
+    setStreamingData: (streamingData: LogTableEntry | null) => set({ streamingData }),
+
+    setLogDataToStream: (dataToStream: StreamResponse | null) =>
+        set((state) => {
+            if (!dataToStream) return state;
+
+            const updatedTableData = state.tableData.map((log) => {
+                if (log.id === dataToStream.log_id && log.applicationId === dataToStream.application_id) {
+                    const updatedLog = {
+                        ...log,
+                        isStreaming: dataToStream.isStreaming,
                         ragInference: {
                             rag_response: {
                                 formatted_rag_response: [],
                                 rag_response: {
                                     application_id: "",
-                                    created_at: "", // ISO 8601 format
-                                    processed_at: "", // ISO 8601 format
+                                    created_at: "",
+                                    processed_at: "",
                                     query: "",
-                                    rag_response: state.logStreamingData.chunk,
+                                    rag_response: log.ragInference.rag_response?.rag_response.rag_response + (dataToStream.chunk || ""),
                                 },
                                 application_id: "",
                                 created_at: "",
                                 query: "",
-                            }
-                        }
+                            },
+                        },
                     };
-                    return updatedEntry;
+                    state.setStreamingData(updatedLog);
+                    return updatedLog;
                 }
+                return log;
+            });
 
-                return entry;
-            }),
-        }));
-        useLogStore.getState().notifyUpdateComplete();
-    },
-
-    updateComplete: false,
-    notifyUpdateComplete: () => set((state) => ({ updateComplete: !state.updateComplete })),
+            return { tableData: updatedTableData };
+        }),
 
     // Append new logs to the existing table data
     appendTableDataToBottom: (newData: LogTableEntry[]) =>
@@ -74,23 +76,6 @@ export const useLogStore = create<LogStoreState>((set) => ({
     appendTableDataToTop: (newData: LogTableEntry[]) =>
         set((state) => ({ tableData: [...newData, ...state.tableData] })),
 
-    logStreamingData: {
-        application_id: "",
-        chunk: "",
-        log_id: "",
-    },
-    setLogStreamingData: (logStreamingData: StreamResponse | null) =>
-        set(state => {
-            // If the incoming log_id is different, reset the chunk
-            const isNewLog = state.logStreamingData.log_id !== logStreamingData?.log_id;
-            return {
-                logStreamingData: {
-                    application_id: logStreamingData?.application_id ?? "",
-                    chunk: isNewLog ? logStreamingData?.chunk ?? "" : state.logStreamingData.chunk + (logStreamingData?.chunk ?? ""),
-                    log_id: logStreamingData?.log_id ?? "",
-                }
-            };
-        }),
 
     // Reset table data and pagination
     resetTableData: () =>

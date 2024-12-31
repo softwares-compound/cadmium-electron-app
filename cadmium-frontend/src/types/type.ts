@@ -149,32 +149,36 @@ export type LogData = LogTableEntry[];
 export interface LogStoreState {
     loading: boolean;
     setLoading: (loading: boolean) => void;
+
     openSlideOver: boolean;
     setOpenSlideOver: (openSlideOver: boolean) => void;
+
     selectedLog: LogTableEntry | null;
     setSelectedLog: (selectedLog: LogTableEntry) => void;
+
     page: number;
     setPage: (page: number) => void;
     incrementPage: () => void;
     decrementPage: () => void;
     limit: number;
     setLimit: (limit: number) => void;
-    tableData: LogTableEntry[];
-    setTableData: (tableData: LogTableEntry[]) => void;
-    setLogStreamingComplete: (logId: string) => void;
-    appendTableDataToBottom: (newData: LogTableEntry[]) => void;
-    appendTableDataToTop: (newData: LogTableEntry[]) => void;
-    logStreamingData: StreamResponse;
-    setLogStreamingData: (logStreamingData: StreamResponse | null) => void;
-    resetTableData: () => void;
     totalLogs: number | null; // Add this
     setTotalLogs: (totalLogs: number) => void; // Add this
 
-    updateComplete: boolean;
-    notifyUpdateComplete: () => void;
+    tableData: LogTableEntry[];
+    setTableData: (tableData: LogTableEntry[]) => void;
+    resetTableData: () => void;
+
+    appendTableDataToBottom: (newData: LogTableEntry[]) => void;
+    appendTableDataToTop: (newData: LogTableEntry[]) => void;
+
+
+    setLogDataToStream: (dataToStream: StreamResponse | null) => void;
+    streamingData: StreamResponse | null;
 }
 
 export type StreamResponse = {
+    isStreaming: boolean;
     application_id: string;
     chunk: string;
     log_id: string;

@@ -14,7 +14,6 @@ import { RagInference } from "./rag-inference";
 import { StackTrace } from "./stack-trace";
 import { GeneralInfo } from "./general-info";
 import { useLogStore } from "@/stores/useLogStore";
-import { useEffect } from "react";
 
 export interface SlideOverProps {
     open: boolean;
@@ -29,15 +28,17 @@ export function SolutionSlideOver({
     errorLog,
     onMarkResolved,
 }: SlideOverProps) {
-    const { logStreamingData, updateComplete } = useLogStore();
-    useEffect(() => {
-        console.log("Force re-render on update completion:", updateComplete);
-    }, [updateComplete]);
+
+    const {
+        streamingData
+    } = useLogStore();
+
 
     if (!errorLog) {
         return null;
     }
 
+    console.log("streamingData", streamingData?.id, "====", errorLog.id);
 
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
@@ -66,9 +67,9 @@ export function SolutionSlideOver({
 
                     {/* Rag inference */}
                     {
-                        errorLog.isStreaming === true && errorLog.id === logStreamingData.log_id ? <RagInference
+                        streamingData && streamingData.id === errorLog.id ? <RagInference
                             ragResponse={
-                                logStreamingData.chunk
+                                streamingData.ragInference.rag_response?.rag_response.rag_response
                             }
                         /> :
                             <RagInference

@@ -94,7 +94,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	const { appendTableDataToTop, setLogStreamingComplete, setLogStreamingData } = useLogStore();
+	const { appendTableDataToTop, setLogDataToStream } = useLogStore();
 
 	/*
 	WebSocket message handling for new logs
@@ -121,15 +121,24 @@ function App() {
 					method: chunk.data.raw_log.method,
 					createdAt: chunk.data.raw_log.created_at,
 					updatedAt: chunk.data.raw_log.updated_at,
-					ragInference: { rag_response: chunk.data.raw_log.ragInference ?? null },
+					ragInference: {
+						rag_response: {
+							formatted_rag_response: [],
+							rag_response: {
+								application_id: "",
+								created_at: "",
+								processed_at: "",
+								query: "",
+								rag_response: "",
+							},
+							application_id: "",
+							created_at: "",
+							query: "",
+						}
+					},
 					traceback: chunk.data.raw_log.traceback,
 					isStreaming: true,
 				}
-				setLogStreamingData({
-					application_id: "",
-					chunk: "",
-					log_id: "",
-				})
 				appendTableDataToTop([logTableData]);
 				// Show notification in Electron
 				if (window.electronAPI) {
@@ -138,14 +147,21 @@ function App() {
 					});
 				}
 			} else if (chunk.action === "stream_log_response") {
-				setLogStreamingData({
+				setLogDataToStream({
+					isStreaming: true,
 					application_id: chunk.data.application_id,
 					chunk: chunk.data.chunk,
 					log_id: chunk.data.log_id,
 				});
 			} else if (chunk.action === "stream_complete") {
-				const log_id = chunk.data.log_id;
-				setLogStreamingComplete(log_id);
+				// const log_id = chunk.data.log_id;
+				// setLogStreamingComplete(log_id);
+				setLogDataToStream({
+					isStreaming: false,
+					application_id: chunk.data.application_id,
+					chunk: chunk.data.chunk,
+					log_id: chunk.data.log_id,
+				});
 			} else {
 				console.log("Received message from WebSocket:", chunk);
 			}
