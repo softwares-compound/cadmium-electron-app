@@ -53,20 +53,27 @@ const LogTable: React.FC = () => {
     return (
         <div>
             <Typography variant="xl" className=" px-2 py-2 ">Error logs</Typography>
-            {/* <div className='w-full max-h-[calc(100dvh-46dvh)] overflow-y-scroll relative scrollbar scrollbar-hide'> */}
-            <InfiniteScroll
-                dataLength={tableData.length} // Current data length
-                next={fetchMoreData} // Function to fetch the next page
-                hasMore={tableData.length >= limit} // Stop scrolling when all logs are loaded
-                loader={loading && <p className='text-center my-4'>Loading...</p>} // Loader shown during fetch
-                scrollableTarget="scrollableDiv" // Target for scrollable container
-            >
-                <Table>
-                    <THead />
-                    <TBody tableData={tableData ?? []} onRowClick={handleRowClick} />
-                </Table>
-            </InfiniteScroll>
-            {/* </div> */}
+
+            
+            <Table>
+                <THead />
+            </Table>
+
+            <div id='scrollableDiv' className='w-full max-h-[calc(100dvh-49dvh)] overflow-y-scroll relative scrollbar scrollbar-hide'>
+                <InfiniteScroll
+                    dataLength={tableData.length} // Current data length
+                    next={fetchMoreData} // Function to fetch the next page
+                    hasMore={tableData.length >= limit} // Stop scrolling when all logs are loaded
+                    loader={loading && <p className='text-center my-4'>Loading...</p>} // Loader shown during fetch
+                    scrollableTarget="scrollableDiv" // Target for scrollable container
+                >
+                    <Table>
+                        {/* <THead /> */}
+                        <TBody tableData={tableData ?? []} onRowClick={handleRowClick} />
+                    </Table>
+                </InfiniteScroll>
+            </div>
+            
             {
                 isLoading
                     ? <p className='text-center my-5'>Loading...</p>
@@ -79,7 +86,10 @@ const LogTable: React.FC = () => {
                 <Typography variant="sm" className="text-muted-foreground px-2 py-8 text-center">No logs found.</Typography>
             }
             <SolutionSlideOver open={openSlideOver} onOpenChange={setOpenSlideOver} errorLog={selectedLog} onMarkResolved={() => setOpenSlideOver(false)} />
+        
         </div>
+
+
     )
 }
 
